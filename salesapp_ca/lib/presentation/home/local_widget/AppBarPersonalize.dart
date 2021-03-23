@@ -230,7 +230,7 @@ class _AppBarPersonalizeState extends State<AppBarPersonalize> {
           onTap: widget.onlogout,
           child: Icon(
             Icons.logout,
-            color: gray,
+            color: Colors.red,
           ),
         ),
         SizedBox(

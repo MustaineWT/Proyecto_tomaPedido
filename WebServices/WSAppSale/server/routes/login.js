@@ -16,22 +16,20 @@ app.post('/Api/v1/login', (req, res) => {
         if (err) {
             return res.status(500).json({
                 status: false,
-                response: err.message
+                message: err.message
             });
         };
         if (hashPassword[0]['Error'] == 'Usuario No Existe') {
-            return res.status(400).json({
+            return res.json({
                 status: false,
-                response: 'Usuario o Contraseña Icncorrecto.'
+                message: 'Usuario o Contraseña Icncorrecto.'
             });
         } else {
-            
+
             if (!bcrypt.compareSync(body.password, hashPassword[0]['Hash_at'])) {
-                return res.status(400).json({
+                return res.json({
                     status: false,
-                    response: {
-                        message: 'Usuario o Contraseña Incorrecto.'
-                    }
+                    message: 'Usuario o Contraseña Incorrecto.'
                 });
             }
             let token = jwt.sign({
@@ -47,6 +45,7 @@ app.post('/Api/v1/login', (req, res) => {
                 token,
                 createAt: now,
                 expire: parseInt(expire, 10),
+                message: 'Process Complete'
             });
 
         }

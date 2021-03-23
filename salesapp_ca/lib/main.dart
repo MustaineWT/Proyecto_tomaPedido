@@ -2,11 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salesapp_ca/domain/repositories/local/local_auth_repository.dart';
 import 'package:salesapp_ca/routes/app_pages.dart';
 import 'package:salesapp_ca/utils/dependencies.dart';
-
-import 'data/services/local/local_auth_api.dart';
 
 void main() {
   LicenseRegistry.addLicense(() async* {

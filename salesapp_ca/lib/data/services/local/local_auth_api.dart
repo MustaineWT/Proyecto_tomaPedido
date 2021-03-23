@@ -14,7 +14,7 @@ class LocalAuthApi extends LocalAuthRepository {
     await _storage.remove(KEY);
   }
 
-  Future<bool> getSession() async {
+  Future<int> getSession() async {
     SharedPreferences _storage = await SharedPreferences.getInstance();
 
     final String? data = _storage.get(KEY) as String?;
@@ -27,15 +27,12 @@ class LocalAuthApi extends LocalAuthRepository {
       final int diff = currentDate.difference(createdAt).inSeconds;
 
       if (expiresIn - diff >= 30) {
-        //print("token alive");
-        print("token alive ${expiresIn - diff}");
-        print("token alive ${requestToken.token}");
-        return true;
+        return 1;
       } else {
-        return false;
+        return 0;
       }
     }
-    return false;
+    return 2;
   }
 
   Future<RequestToken> setSession(RequestToken requestToken) async {

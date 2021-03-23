@@ -15,26 +15,22 @@ class TextFieldPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _formKey = GlobalKey<FormState>();
     return Container(
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
-      child: Form(
-        key: _formKey,
-        child: TextFormField(
-          controller: passwordController,
-          onChanged: onChangedPasssword,
-          decoration: InputDecoration(
-            hintText: 'Contraseña',
-            hintStyle: TextStyle(color: Colors.grey),
-            border: InputBorder.none,
-            suffixIcon: IconButton(
-              icon: Icon(secureText ? Icons.remove_red_eye : Icons.security),
-              onPressed: onPressedIcon,
-            ),
+      child: TextFormField(
+        controller: passwordController,
+        onChanged: onChangedPasssword,
+        decoration: InputDecoration(
+          hintText: 'Contraseña',
+          hintStyle: TextStyle(color: Colors.grey),
+          border: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(secureText ? Icons.remove_red_eye : Icons.security),
+            onPressed: onPressedIcon,
           ),
-          obscureText: secureText,
         ),
+        obscureText: secureText,
       ),
     );
   }

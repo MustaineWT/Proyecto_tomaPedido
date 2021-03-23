@@ -10,19 +10,18 @@ app.post('/Api/v1/UserAdmin', (req, res) => {
     async function hashPassword(password) {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
-        // console.log(hash)   
 
         params = {
-            Name: body.Name,
-            LastName: body.LastName,
             BussinesName: body.BussinesName,
             Ruc: body.Ruc,
             Direction: body.Direction,
             City: body.City,
             Country: body.Country,
-            Dni: body.Dni,
             Phone: body.Phone,
-            EmailCompany: body.EmailCompany,      
+            EmailCompany: body.EmailCompany,
+            Name: body.Name,
+            LastName: body.LastName,
+            Dni: body.Dni,
             TypePersonId: body.TypePersonId,
             EmailAdmin: body.EmailAdmin,
             DirectionAdmin: body.DirectionAdmin,
@@ -36,20 +35,20 @@ app.post('/Api/v1/UserAdmin', (req, res) => {
             if (err) {
                 return res.status(500).json({
                     status: false,
-                    response: err
+                    message: err
                 });
             };
-            if (hashResponse[0]['Response'] == 'Compania ya Existe') {
+            if (hashResponse[0]['Response'] == 'Compania ya Existe' || hashResponse[0]['Response'] == 'Usuario ya Existe') {
                 console.log(hashResponse[0]['Response']);
-                return res.status(400).json({
+                return res.json({
                     status: false,
-                    response: 'Compania ya Existe.'
+                    message: hashResponse[0]['Response']
                 });
             }
 
             res.json({
                 status: true,
-                response: hashResponse[0].Response
+                message: hashResponse[0].Response
             });
         });
     }
@@ -63,7 +62,7 @@ app.post('/Api/v1/UserSeller', (req, res) => {
 
     async function hashPassword(password) {
         const salt = await bcrypt.genSalt(10)
-        const hash = await bcrypt.hash(password, salt)        
+        const hash = await bcrypt.hash(password, salt)
         params = {
             Name: body.Name,
             LastName: body.LastName,

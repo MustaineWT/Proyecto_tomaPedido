@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salesapp_ca/domain/usercase/auth_usecase.dart';
-import 'package:salesapp_ca/presentation/login/cubit/login_cubit.dart';
+import 'package:salesapp_ca/presentation/login/login_view.dart';
+import 'package:salesapp_ca/utils/navigator_utils.dart';
 
+import 'cubit/home_cubit.dart';
 import 'local_widget/AppBarPersonalize.dart';
 
 class HomeView extends StatelessWidget {
@@ -10,18 +11,54 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return BlocProvider(
-        create: (context) => LoginCubitLogout(context.read()),
-        child: BlocConsumer<LoginCubitLogout, LoginState>(
-          listener: (context, state) {},
+        create: (context) => HomeCubitLogout(context.read()),
+        child: BlocConsumer<HomeCubitLogout, HomeState>(
+          listener: (context, snapshot) {
+            switch (snapshot) {
+              case HomeState.logout:
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext _) {
+                    return AlertDialog(
+                      title: Text('Información'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Text('Desea cerrar sesión.'),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                            child: Text('Si'),
+                            onPressed: () {
+                              context.read<HomeCubitLogout>().sessionClose();
+                              popAllAndPush(context, LoginView());
+                            }),
+                        TextButton(
+                          child: Text('No'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+                break;
+              case HomeState.none:
+                break;
+            }
+          },
           builder: (context, state) {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size(size.width, 40),
                 child: AppBarPersonalize(
-                  onlogout: context.read<LoginCubitLogout>().onLogout,
+                  onlogout: context.read<HomeCubitLogout>().onLogout,
                   value: 1,
-                  title: 'hola',
-                  //onChange: (){},
+                  title: 'HomePage',
                   valor: 1,
                 ),
               ),

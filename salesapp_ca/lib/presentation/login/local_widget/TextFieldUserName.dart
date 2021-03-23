@@ -11,20 +11,16 @@ class TextFieldUserName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _formKey = GlobalKey<FormState>();
     return Container(
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
-      child: Form(
-        key: _formKey,
-        child: TextFormField(
-          controller: usuarioController,
-          onChanged: onChangedUserName,
-          decoration: InputDecoration(
-            hintText: 'Usuario',
-            hintStyle: TextStyle(color: Colors.grey),
-            border: InputBorder.none,
-          ),
+      child: TextFormField(
+        controller: usuarioController,
+        onChanged: onChangedUserName,
+        decoration: InputDecoration(
+          hintText: 'Usuario',
+          hintStyle: TextStyle(color: Colors.grey),
+          border: InputBorder.none,
         ),
       ),
     );
