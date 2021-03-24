@@ -2,6 +2,9 @@ const express = require('express');
 var db = require('../../sql/maintenanceSQL/usuarioSQL');
 const bcrypt = require('bcrypt')
 const app = express();
+const {
+    verificaToken
+} = require('../../middlewares/autenticacion');
 
 app.post('/Api/v1/UserAdmin', (req, res) => {
     let Query = 'SI_UserAdmin';
@@ -56,6 +59,48 @@ app.post('/Api/v1/UserAdmin', (req, res) => {
     hashPassword(body.Password);
 
 });
+
+
+app.get('/Api/v1/User', verificaToken, (req, res) => {
+    let Query = 'SS_User';
+    let body = req.query;
+    if (body.personid == undefined) {
+        return res.json({
+            ok: false,
+            message: 'Debe ingresar los parametros correctos.'
+        });
+    } else {
+        params = {
+            personid: body.personid
+        };
+
+        db.executeSql(Query, params, 'SelectUser', (user, err) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err: {}
+                });
+            };
+            if (user.length > 0) {
+                res.json({
+                    ok: true,
+                    user: user[0],
+                    message: 'Solicitud Exitosa.',
+                });
+            } else {
+                res.json({
+                    ok: true,
+                    message: 'No se encontraron registros para la consulta realizada.'
+                });
+            }
+
+
+        });
+    }
+
+});
+
 app.post('/Api/v1/UserSeller', (req, res) => {
     let Query = 'SI_UserSeller';
     let body = req.body;

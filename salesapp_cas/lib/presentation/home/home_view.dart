@@ -19,7 +19,9 @@ class _HomeViewState extends State<HomeView> {
   final AuthUseCase _authUseCase;
 
   _HomeViewState(this._authUseCase);
+
   TextEditingController _searchController = TextEditingController();
+
   bool _stateColorSelectClient = false;
   bool _stateColorSelectOrders = false;
   bool _stateColorSelectArticle = false;
@@ -36,84 +38,28 @@ class _HomeViewState extends State<HomeView> {
     ClientView(),
     ClientView()
   ];
-
+  List<bool> options = [false, false, false, false, false, false];
   int _value = 0;
   String _search = '';
   String _nameOpcion = '';
 
-  _onPressedOpcion(bool valor, int opcion) {
-    switch (opcion) {
-      case 1:
-        _stateColorSelectClient = !_stateColorSelectClient;
-        _stateColorSelectOrders = false;
-        _stateColorSelectArticle = false;
-        _stateColorSelectReport = false;
-        _stateColorSelectSetting = false;
-        _stateColorSelectInformation = false;
-        _value = 1;
-        _nameOpcion = 'Clientes';
-        setState(() {});
-        break;
-      case 2:
-        _stateColorSelectOrders = !_stateColorSelectOrders;
-        _stateColorSelectClient = false;
-        _stateColorSelectArticle = false;
-        _stateColorSelectReport = false;
-        _stateColorSelectSetting = false;
-        _stateColorSelectInformation = false;
-        _value = 2;
-        _nameOpcion = 'Pedidos';
-        setState(() {});
-        break;
-      case 3:
-        _stateColorSelectArticle = !_stateColorSelectArticle;
-        _stateColorSelectReport = false;
-        _stateColorSelectOrders = false;
-        _stateColorSelectClient = false;
-        _stateColorSelectSetting = false;
-        _stateColorSelectInformation = false;
-        _value = 3;
-        _nameOpcion = 'Articulos';
-        setState(() {});
-        break;
-      case 4:
-        _stateColorSelectReport = !_stateColorSelectReport;
-        _stateColorSelectOrders = false;
-        _stateColorSelectClient = false;
-        _stateColorSelectSetting = false;
-        _stateColorSelectInformation = false;
-        _stateColorSelectArticle = false;
-        _value = 4;
-        _nameOpcion = 'Reportes';
-        setState(() {});
-        break;
-      case 5:
-        _stateColorSelectSetting = !_stateColorSelectSetting;
-        _stateColorSelectOrders = false;
-        _stateColorSelectArticle = false;
-        _stateColorSelectReport = false;
-        _stateColorSelectClient = false;
-        _stateColorSelectInformation = false;
-        _value = 5;
-        _nameOpcion = 'Configuración';
-        setState(() {});
-        break;
-
-      case 6:
-        _stateColorSelectInformation = !_stateColorSelectInformation;
-        _stateColorSelectOrders = false;
-        _stateColorSelectArticle = false;
-        _stateColorSelectReport = false;
-        _stateColorSelectSetting = false;
-        _stateColorSelectClient = false;
-        _value = 6;
-        _nameOpcion = 'Información';
-        setState(() {});
-        break;
-      default:
-        _value = 0;
-        break;
+  _onPressedOpcion(int opcion, String nameOpcion) {
+    _value = opcion + 1;
+    _nameOpcion = nameOpcion;
+    List<bool> opcions = [
+      _stateColorSelectClient,
+      _stateColorSelectOrders,
+      _stateColorSelectArticle,
+      _stateColorSelectReport,
+      _stateColorSelectSetting,
+      _stateColorSelectInformation
+    ];
+    for (int i = 0; i < opcions.length; i++) {
+      opcions[i] = false;
     }
+    opcions[opcion] = true;
+    options = opcions;
+    setState(() {});
   }
 
   _onChangedSearch(String text) {
@@ -144,35 +90,35 @@ class _HomeViewState extends State<HomeView> {
         elevation: 16.0,
         child: MenuDrawer(
           onPressedClient: () {
-            _onPressedOpcion(true, 1);
+            _onPressedOpcion(0, 'Clientes');
             Navigator.pop(context);
           },
           onPressedOrders: () {
-            _onPressedOpcion(true, 2);
+            _onPressedOpcion(1, 'Pedidos');
             Navigator.pop(context);
           },
           onPressedArticles: () {
-            _onPressedOpcion(true, 3);
+            _onPressedOpcion(2, 'Articulos');
             Navigator.pop(context);
           },
           onPressedReports: () {
-            _onPressedOpcion(true, 4);
+            _onPressedOpcion(3, 'Reportes');
             Navigator.pop(context);
           },
           onPressedSetting: () {
-            _onPressedOpcion(true, 5);
+            _onPressedOpcion(4, 'Configuración');
             Navigator.pop(context);
           },
           onPressedInformation: () {
-            _onPressedOpcion(true, 6);
+            _onPressedOpcion(5, 'Información');
             Navigator.pop(context);
           },
-          stateColorClient: _stateColorSelectClient,
-          stateColorOrders: _stateColorSelectOrders,
-          stateColorArticle: _stateColorSelectArticle,
-          stateColorReport: _stateColorSelectReport,
-          stateColorSetting: _stateColorSelectSetting,
-          stateColorInformation: _stateColorSelectInformation,
+          stateColorClient: options[0],
+          stateColorOrders: options[1],
+          stateColorArticle: options[2],
+          stateColorReport: options[3],
+          stateColorSetting: options[4],
+          stateColorInformation: options[5],
         ),
       ),
       body: SingleChildScrollView(
