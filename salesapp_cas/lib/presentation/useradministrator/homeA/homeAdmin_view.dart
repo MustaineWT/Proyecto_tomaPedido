@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:salesapp_cas/presentation/client/client_view.dart';
-import 'package:salesapp_cas/presentation/inibody/inibody_view.dart';
-import '../../presentation/widgets/ShowDialogMessage.dart';
-import '../../data/services/local/local_auth_api.dart';
-import '../../data/services/remote/authentication_api.dart';
-import '../../domain/usecase/auth_usecase.dart';
+import '../inibodyA/inibody_view.dart';
+import '../../../helpers/get.dart';
+import '../../../presentation/widgets/ShowDialogMessage.dart';
+import '../../../domain/usecase/auth_usecase.dart';
 
 import 'local_widget/AppBarPersonalize.dart';
 import 'local_widget/MenuDrawer.dart';
 
-class HomeView extends StatefulWidget {
+class HomeAdminView extends StatefulWidget {
   @override
-  _HomeViewState createState() =>
-      _HomeViewState(AuthUseCase(AuthenticationApi(), LocalAuthApi()));
+  _HomeAdminViewState createState() => _HomeAdminViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  final AuthUseCase _authUseCase;
-
-  _HomeViewState(this._authUseCase);
+class _HomeAdminViewState extends State<HomeAdminView> {
+  //final AuthUseCase _authUseCase;
+  final _authUseCase = Get.i.find<AuthUseCase>();
 
   TextEditingController _searchController = TextEditingController();
 
@@ -31,12 +27,12 @@ class _HomeViewState extends State<HomeView> {
 
   List<Widget> _listWidget = [
     IniBodyView(),
-    ClientView(),
-    ClientView(),
-    ClientView(),
-    ClientView(),
-    ClientView(),
-    ClientView()
+    IniBodyView(),
+    IniBodyView(),
+    IniBodyView(),
+    IniBodyView(),
+    IniBodyView(),
+    IniBodyView(),
   ];
   List<bool> options = [false, false, false, false, false, false];
   int _value = 0;

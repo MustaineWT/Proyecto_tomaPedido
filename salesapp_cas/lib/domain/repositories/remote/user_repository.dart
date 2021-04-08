@@ -1,7 +1,9 @@
+import 'package:salesapp_cas/data/models/user.dart';
+
 import '../../../data/models/responses/requestToken.dart';
 
-abstract class UserAdminRepository {
-  Future<RequestToken> registerUserAdmin(
+abstract class UserRepository {
+  Future<RequestToken> registerUser(
       String bussinesName,
       String ruc,
       String direction,
@@ -19,4 +21,6 @@ abstract class UserAdminRepository {
       String countryAdmin,
       String user,
       String password);
+
+  Future<User> getUser(token, int personid);
 }

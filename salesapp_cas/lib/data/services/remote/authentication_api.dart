@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:salesapp_cas/utils/logs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../utils/logs.dart';
 import '../../../data/models/responses/requestToken.dart';
 import '../../../domain/repositories/remote/authentication_repository.dart';
-import '../../../utils/dio.dart';
 
 class AuthenticationApi extends AuthenticationRepository {
-  final Dio _dio = dio;
+  final Dio _dio;
 
+  AuthenticationApi(this._dio);
   Future<RequestToken> validateWithLogin(
       String username, String password) async {
     final response = await _dio.post(
@@ -15,5 +16,11 @@ class AuthenticationApi extends AuthenticationRepository {
     );
     Logs.p.i(response.data);
     return RequestToken.fromJson(response.data);
+  }
+
+  @override
+  Future<void> logoutSession() async {
+    SharedPreferences _storage = await SharedPreferences.getInstance();
+    await _storage.clear();
   }
 }

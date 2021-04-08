@@ -1,23 +1,23 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/models/responses/requestToken.dart';
 import '../../../domain/repositories/local/local_auth_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const KEY = "session";
 
 class LocalAuthApi extends LocalAuthRepository {
+  SharedPreferences _preferences;
+  LocalAuthApi(this._preferences);
+
   static const KEY = "session";
   @override
   Future<void> clearSession() async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-    await _storage.remove(KEY);
+    await _preferences.remove(KEY);
   }
 
   Future<int> getSession() async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-
-    final String? data = _storage.get(KEY) as String?;
+    final String? data = _preferences.get(KEY) as String?;
 
     if (data != null) {
       final RequestToken requestToken = RequestToken.fromJson(jsonDecode(data));
@@ -35,9 +35,14 @@ class LocalAuthApi extends LocalAuthRepository {
     return 2;
   }
 
+  Future<RequestToken> getUserSession() async {
+    final String? data = _preferences.get(KEY) as String?;
+    final RequestToken requestToken = RequestToken.fromJson(jsonDecode(data!));
+    return requestToken;
+  }
+
   Future<RequestToken> setSession(RequestToken requestToken) async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-    await _storage.setString(KEY, jsonEncode(requestToken.toJson()));
+    await _preferences.setString(KEY, jsonEncode(requestToken.toJson()));
     return requestToken;
   }
 }

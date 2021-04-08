@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:salesapp_cas/data/services/remote/useradmin_api.dart';
-import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
-import 'package:salesapp_cas/domain/usecase/useradmin_usecase.dart';
-import 'package:salesapp_cas/presentation/widgets/ShowDialogMessage.dart';
-import 'package:salesapp_cas/utils/TextFieldPerzonalice.dart';
-import 'package:salesapp_cas/utils/dialogs.dart';
+import '../../domain/exceptions/auth_exception.dart';
+import '../../domain/usecase/user_usecase.dart';
+import '../../presentation/widgets/ShowDialogMessage.dart';
+import '../../utils/TextFieldPerzonalice.dart';
+import '../../utils/dialogs.dart';
+import '../../helpers/get.dart';
 import '../../presentation/signup/local_widget/ButtonSignUp.dart';
 import '../../presentation/widgets/CurvePainter.dart';
 import '../../utils/colors_constants.dart';
@@ -13,13 +13,11 @@ class SignUpView extends StatefulWidget {
   SignUpView({Key? key}) : super(key: key);
 
   @override
-  _SignUpViewState createState() =>
-      _SignUpViewState(UserAdminUseCase(UserAdminApi()));
+  _SignUpViewState createState() => _SignUpViewState();
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  final UserAdminUseCase _userAdminUseCase;
-  _SignUpViewState(this._userAdminUseCase);
+  final _userAdminUseCase = Get.i.find<UserUseCase>();
 
   Future<void> _onRegisterUserAdmin() async {
     try {

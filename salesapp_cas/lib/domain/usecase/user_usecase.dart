@@ -1,12 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/data/models/user.dart';
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
-import 'package:salesapp_cas/domain/repositories/remote/useradmin_repository.dart';
+import 'package:salesapp_cas/domain/repositories/local/local_auth_repository.dart';
+import 'package:salesapp_cas/domain/repositories/remote/authentication_repository.dart';
+import 'package:salesapp_cas/domain/repositories/remote/user_repository.dart';
 import 'package:salesapp_cas/utils/logs.dart';
 
-class UserAdminUseCase {
-  UserAdminUseCase(this._userAdminRepository);
-  final UserAdminRepository _userAdminRepository;
+class UserUseCase {
+  UserUseCase(this._userRepository, this._localAuthRepository);
+  final UserRepository _userRepository;
+  final LocalAuthRepository _localAuthRepository;
+
   final bussinesNameController = TextEditingController();
   final rucController = TextEditingController();
   final directionController = TextEditingController();
@@ -107,6 +112,16 @@ class UserAdminUseCase {
     _password = password;
   }
 
+  Future<User> getUser() async {
+    final requestToken = await _localAuthRepository.getUserSession();
+
+    final user = _userRepository.getUser(
+      requestToken.token,
+      requestToken.personid!,
+    );
+    return user;
+  }
+
   Future<String> registerUserAdmin() async {
     await Future.delayed(Duration(seconds: 3));
     if (bussinesNameController.text.isNotEmpty &&
@@ -125,7 +140,7 @@ class UserAdminUseCase {
         userController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
       try {
-        final requestToken = await _userAdminRepository.registerUserAdmin(
+        final requestToken = await _userRepository.registerUser(
           _bussinesName,
           _ruc,
           _direction,

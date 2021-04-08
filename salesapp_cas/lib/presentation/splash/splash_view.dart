@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
-import '../../data/services/local/local_auth_api.dart';
-import '../../data/services/remote/authentication_api.dart';
+import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
+import 'package:salesapp_cas/presentation/useradministrator/homeA/homeAdmin_view.dart';
+import 'package:salesapp_cas/presentation/userseller/homeS/homeSeller_view.dart';
+import '../../helpers/get.dart';
 import '../../domain/usecase/auth_usecase.dart';
-import '../../presentation/home/home_view.dart';
 import '../../presentation/login/login_view.dart';
 import '../../utils/colors_constants.dart';
 import '../../utils/navigator_utils.dart';
 
 class SplashView extends StatefulWidget {
   @override
-  _SplashViewState createState() =>
-      _SplashViewState(AuthUseCase(AuthenticationApi(), LocalAuthApi()));
+  _SplashViewState createState() => _SplashViewState();
 }
 
 class _SplashViewState extends State<SplashView> {
-  final AuthUseCase _authUseCase;
-
-  _SplashViewState(this._authUseCase);
+  final _authUseCase = Get.i.find<AuthUseCase>();
+  final _userUseCase = Get.i.find<UserUseCase>();
 
   Future<void> _init() async {
     final result = await _authUseCase.onInit();
     if (result == 0) {
       popAllAndPush(context, LoginView());
     } else if (result == 1) {
-      popAllAndPush(context, HomeView());
+      final typeUser = await _userUseCase.getUser();
+      if (typeUser.description == 'Administrador') {
+        print('Admin');
+        return popAllAndPush(context, HomeAdminView());
+      } else {
+        return popAllAndPush(context, HomeSellerView());
+      }
     } else {
       popAllAndPush(context, LoginView());
     }

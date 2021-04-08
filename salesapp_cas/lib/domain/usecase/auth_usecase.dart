@@ -4,7 +4,6 @@ import 'package:salesapp_cas/utils/logs.dart';
 import '../../domain/exceptions/auth_exception.dart';
 import '../../domain/repositories/local/local_auth_repository.dart';
 import '../../domain/repositories/remote/authentication_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthUseCase {
   AuthUseCase(this._authenticationRepository, this._localAuthRepository);
@@ -53,8 +52,7 @@ class AuthUseCase {
   }
 
   Future<bool> onLogout() async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-    await _storage.clear();
+    await _authenticationRepository.logoutSession();
     return true;
   }
 

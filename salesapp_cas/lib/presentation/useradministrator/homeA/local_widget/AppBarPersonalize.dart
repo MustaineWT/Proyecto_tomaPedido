@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../utils/colors_constants.dart';
+import '../../../../utils/colors_constants.dart';
 
 class AppBarPersonalize extends StatefulWidget {
   const AppBarPersonalize({

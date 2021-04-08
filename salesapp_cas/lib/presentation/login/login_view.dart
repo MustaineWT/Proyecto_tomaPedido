@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:salesapp_cas/presentation/signup/signup_view.dart';
+import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
+import 'package:salesapp_cas/presentation/userseller/homeS/homeSeller_view.dart';
+import '../../presentation/useradministrator/homeA/homeAdmin_view.dart';
+import '../../presentation/signup/signup_view.dart';
+import '../../helpers/get.dart';
 import '../../presentation/widgets/CurvePainter.dart';
-import '../../data/services/local/local_auth_api.dart';
-import '../../data/services/remote/authentication_api.dart';
 import '../../domain/exceptions/auth_exception.dart';
 import '../../domain/usecase/auth_usecase.dart';
-import '../../presentation/home/home_view.dart';
 import '../../presentation/widgets/ShowDialogMessage.dart';
 import '../../utils/colors_constants.dart';
 import '../../utils/dialogs.dart';
@@ -16,14 +17,12 @@ import 'local_widget/TextFieldUserName.dart';
 
 class LoginView extends StatefulWidget {
   @override
-  _LoginViewState createState() =>
-      _LoginViewState(AuthUseCase(AuthenticationApi(), LocalAuthApi()));
+  _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
-  final AuthUseCase _authUseCase;
-
-  _LoginViewState(this._authUseCase);
+  final _authUseCase = Get.i.find<AuthUseCase>();
+  final _userUseCase = Get.i.find<UserUseCase>();
 
   bool _vPass = true;
 
@@ -36,13 +35,20 @@ class _LoginViewState extends State<LoginView> {
     return pushToPage(context, SignUpView());
   }
 
-  Future<void> _onSubmit() async {
+  Future<void> _onLogIn() async {
     try {
       ProgressDialog.show(context);
       final result = await _authUseCase.onSubmit();
+      print(result);
       ProgressDialog.dissmiss(context);
       if (result == 'entry') {
-        return popAllAndPush(context, HomeView());
+        final typeUser = await _userUseCase.getUser();
+        if (typeUser.description == 'Administrador') {
+          print('Admin');
+          return popAllAndPush(context, HomeAdminView());
+        } else {
+          return popAllAndPush(context, HomeSellerView());
+        }
       }
       if (result == 'not entry') {
         return ShowDialogMessage.showDialogMessage(
@@ -54,6 +60,7 @@ class _LoginViewState extends State<LoginView> {
       }
     } on AppException catch (ex) {
       print(ex);
+      ProgressDialog.dissmiss(context);
       return ShowDialogMessage.showDialogMessage(
           context, 'Información', 'Servidor sin respuesta.');
     }
@@ -170,7 +177,7 @@ class _LoginViewState extends State<LoginView> {
                                         height: 30,
                                       ),
                                       ButtonLogin(
-                                          value: true, onSubmit: _onSubmit),
+                                          value: true, onSubmit: _onLogIn),
                                       SizedBox(
                                         height: 10,
                                       ),
