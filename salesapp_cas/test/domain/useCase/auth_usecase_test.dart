@@ -18,7 +18,7 @@ void main() async {
     });
     test('onSubmit valid session not with credential', () async {
       final _getAuthUseCases = _getAuthUseCase();
-      final String _getOnSubmit = await _getAuthUseCases.onSubmit();
+      final String _getOnSubmit = await _getAuthUseCases.onLogIn();
 
       expect(_getOnSubmit, 'typing'); //Not token
     });
@@ -30,7 +30,7 @@ void main() async {
       _getAuthUseCases.passwordController.text = '1234';
       _getAuthUseCases.changedUserName('wtorr');
       _getAuthUseCases.changedPassword('1234');
-      final String _getOnSubmit = await _getAuthUseCases.onSubmit();
+      final String _getOnSubmit = await _getAuthUseCases.onLogIn();
 
       expect(_getOnSubmit, 'not entry'); //Not token
     });
@@ -40,7 +40,7 @@ void main() async {
       _getAuthUseCases.passwordController.text = '123456';
       _getAuthUseCases.changedUserName('wtorres');
       _getAuthUseCases.changedPassword('123456');
-      final String _getOnSubmit = await _getAuthUseCases.onSubmit();
+      final String _getOnSubmit = await _getAuthUseCases.onLogIn();
 
       expect(_getOnSubmit, 'entry'); //Not token
     });

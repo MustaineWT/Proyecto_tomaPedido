@@ -9,7 +9,7 @@ const {
 app.post('/Api/v1/UserAdmin', (req, res) => {
     let Query = 'SI_UserAdmin';
     let body = req.body;
-
+    console.log(body);
     async function hashPassword(password) {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
@@ -61,8 +61,52 @@ app.post('/Api/v1/UserAdmin', (req, res) => {
 });
 
 
+app.post('/Api/v1/UserSeller', verificaToken, (req, res) => {
+    let Query = 'SI_UserSeller';
+    let body = req.body;
+    console.log(req.body);
+    async function hashPassword(password) {
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(password, salt)
+        params = {
+            CompanyId: body.CompanyId,
+            BranchOfficeId: body.BranchOfficeId,
+            Name: body.Name,
+            LastName: body.LastName,
+            Direction: body.Direction,
+            City: body.City,
+            Country: body.Country,
+            Dni: body.Dni,
+            Phone: body.Phone,
+            Email: body.Email,
+            TypePersonId: body.TypePersonId,
+            User_at: body.User,
+            Hash_at: hash
+        };
+
+        db.executeSql(Query, params, 'RegisterUserSeller', (hashResponse, err) => {
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    message: err.message
+                });
+            };
+            console.log(hashResponse);
+            res.json({
+                status: true,
+                personid: hashResponse[0].PersonId,
+                message: hashResponse[0].Response
+            });
+        });
+    }
+
+    hashPassword(body.Password);
+
+});
+
+
 app.get('/Api/v1/User', verificaToken, (req, res) => {
-    let Query = 'SS_User';
+    const query = 'SS_User';
     let body = req.query;
     if (body.personid == undefined) {
         return res.json({
@@ -74,7 +118,7 @@ app.get('/Api/v1/User', verificaToken, (req, res) => {
             personid: body.personid
         };
 
-        db.executeSql(Query, params, 'SelectUser', (user, err) => {
+        db.executeSql(query, params, 'SelectUser', (user, err) => {
 
             if (err) {
                 return res.status(500).json({
@@ -101,42 +145,44 @@ app.get('/Api/v1/User', verificaToken, (req, res) => {
 
 });
 
-app.post('/Api/v1/UserSeller', (req, res) => {
-    let Query = 'SI_UserSeller';
-    let body = req.body;
-
-    async function hashPassword(password) {
-        const salt = await bcrypt.genSalt(10)
-        const hash = await bcrypt.hash(password, salt)
+app.get('/Api/v1/UserSeller', verificaToken, (req, res) => {
+    const query = 'SS_Seller';
+    let body = req.query;
+    if (body.CompanyId == undefined || body.BranchOfficeId == undefined) {
+        return res.json({
+            ok: false,
+            message: 'Debe ingresar los parametros correctos.'
+        });
+    } else {
         params = {
-            Name: body.Name,
-            LastName: body.LastName,
-            Direction: body.Direction,
-            City: body.City,
-            Country: body.Country,
-            Dni: body.Dni,
-            Phone: body.Phone,
-            Email: body.Email,
-            TypePersonId: body.TypePersonId,
-            User_at: body.User,
-            Hash_at: hash
+            CompanyId: body.CompanyId,
+            BranchOfficeId: body.BranchOfficeId
         };
 
-        db.executeSql(Query, params, 'RegisterUserSeller', (hashResponse, err) => {
+        db.executeSql(query, params, 'SelectUserSeller', (seller, err) => {
+
             if (err) {
                 return res.status(500).json({
-                    status: false,
-                    response: err.message
+                    ok: false,
+                    err: {}
                 });
             };
-            res.json({
-                status: true,
-                response: hashResponse[0].Response
-            });
+            if (seller.length > 0) {
+                res.json({
+                    ok: true,
+                    seller: seller,
+                    message: 'Solicitud Exitosa.',
+                });
+            } else {
+                res.json({
+                    ok: true,
+                    message: 'No se encontraron registros para la consulta realizada.'
+                });
+            }
+
+
         });
     }
-
-    hashPassword(body.Password);
 
 });
 

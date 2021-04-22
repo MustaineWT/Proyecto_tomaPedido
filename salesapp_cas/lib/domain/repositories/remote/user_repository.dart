@@ -1,5 +1,4 @@
-import 'package:salesapp_cas/data/models/user.dart';
-
+import 'package:salesapp_cas/data/models/user/user.dart';
 import '../../../data/models/responses/requestToken.dart';
 
 abstract class UserRepository {

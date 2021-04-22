@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:salesapp_cas/data/models/user.dart';
+import 'package:salesapp_cas/data/models/user/user.dart';
 import '../../../utils/logs.dart';
 import '../../models/responses/requestToken.dart';
 import '../../../domain/repositories/remote/user_repository.dart';
 
 class UserApi extends UserRepository {
   final Dio _dio;
+
   UserApi(this._dio);
+  @override
   Future<RequestToken> registerUser(
       String bussinesName,
       String ruc,
@@ -51,6 +53,7 @@ class UserApi extends UserRepository {
     return RequestToken.fromJson(response.data);
   }
 
+  @override
   Future<User> getUser(token, int personid) async {
     final response = await _dio.get(
       '/User',
@@ -63,7 +66,8 @@ class UserApi extends UserRepository {
         },
       ),
     );
+
     Logs.p.i(response.data);
-    return User.fromJson(response.data);
+    return User.fromJson(response.data['user']);
   }
 }

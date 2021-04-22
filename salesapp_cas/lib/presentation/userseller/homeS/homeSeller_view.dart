@@ -37,6 +37,7 @@ class _HomeSellerViewState extends State<HomeSellerView> {
   ];
   List<bool> options = [false, false, false, false, false, false];
   int _value = 0;
+  // ignore: unused_field
   String _search = '';
   String _nameOpcion = '';
 

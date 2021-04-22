@@ -1,16 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:salesapp_cas/data/models/user.dart';
+import 'package:salesapp_cas/data/datasource/userdb.dart';
+import 'package:salesapp_cas/data/models/user/user.dart';
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
 import 'package:salesapp_cas/domain/repositories/local/local_auth_repository.dart';
-import 'package:salesapp_cas/domain/repositories/remote/authentication_repository.dart';
 import 'package:salesapp_cas/domain/repositories/remote/user_repository.dart';
 import 'package:salesapp_cas/utils/logs.dart';
 
 class UserUseCase {
-  UserUseCase(this._userRepository, this._localAuthRepository);
+  UserUseCase(this._userRepository, this._localAuthRepository, this._userDB);
   final UserRepository _userRepository;
   final LocalAuthRepository _localAuthRepository;
+
+  final UserDB _userDB;
 
   final bussinesNameController = TextEditingController();
   final rucController = TextEditingController();
@@ -33,6 +35,7 @@ class UserUseCase {
   String _bussinesName = '',
       _ruc = '',
       _direction = '',
+      // ignore: unused_field
       _city = '',
       _country = '',
       _phone = '',
@@ -40,10 +43,14 @@ class UserUseCase {
       _name = '',
       _lastName = '',
       _dni = '',
+      // ignore: unused_field
       _typePersonid = '',
       _emailAdmin = '',
+      // ignore: unused_field
       _directionAdmin = '',
+      // ignore: unused_field
       _cityAdmin = '',
+      // ignore: unused_field
       _countryAdmin = '',
       _user = '',
       _password = '';
@@ -112,17 +119,24 @@ class UserUseCase {
     _password = password;
   }
 
-  Future<User> getUser() async {
+  getUser() async {
+    //*Obtiene los usuarios de API
     final requestToken = await _localAuthRepository.getUserSession();
-
-    final user = _userRepository.getUser(
-      requestToken.token,
-      requestToken.personid!,
-    );
-    return user;
+    try {
+      final user = await _userRepository.getUser(
+          requestToken.token, requestToken.personid!);
+      // ignore: unnecessary_null_comparison
+      if (user != null) {
+        return user;
+      }
+    } on DioError catch (dioError) {
+      Logs.p.e(dioError);
+      throw AppException.fromDioError(dioError);
+    }
   }
 
   Future<String> registerUserAdmin() async {
+    //*Registra Usuario en API
     await Future.delayed(Duration(seconds: 3));
     if (bussinesNameController.text.isNotEmpty &&
         rucController.text.isNotEmpty &&
@@ -144,7 +158,7 @@ class UserUseCase {
           _bussinesName,
           _ruc,
           _direction,
-          _city,
+          'Peru',
           _country,
           _phone,
           _emailCompany,
@@ -153,9 +167,9 @@ class UserUseCase {
           _dni,
           1,
           _emailAdmin,
-          _directionAdmin,
-          _cityAdmin,
-          _countryAdmin,
+          'S/N',
+          'S/N',
+          'S/N',
           _user,
           _password,
         );
@@ -165,7 +179,33 @@ class UserUseCase {
         throw AppException.fromDioError(dioError);
       }
     } else {
-      return 'typing';
+      return 'Debe llenar todos los datos.';
     }
+  }
+
+  registerUserDB() async {
+    //*Registra el usuario Obtenido de la api hacia Hive
+    final requestToken = await _localAuthRepository.getUserSession();
+    try {
+      final user = await _userRepository.getUser(
+        requestToken.token,
+        requestToken.personid!,
+      );
+      // ignore: unnecessary_null_comparison
+      if (user != null) {
+        await _userDB.addUser(user);
+        return user;
+      }
+    } on DioError catch (dioError) {
+      Logs.p.e(dioError);
+      throw AppException.fromDioError(dioError);
+    }
+  }
+
+  getUserDB() async {
+    //*Registra los usuarios y obtiene el usuario disponible de Hive
+
+    List<User> user = await _userDB.getAllUsers();
+    return user;
   }
 }

@@ -5,44 +5,51 @@ import '../../../../utils/colors_constants.dart';
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
     Key? key,
-    this.nameSeller = 'Vendedor Prueba 1',
-    this.route = '1001',
-    this.date = '27/02/2021',
-    this.warehouse = '01',
-    this.guide = 'T001-00001',
-    this.typeSale = 'Preventa',
-    required this.onPressedClient,
-    required this.onPressedOrders,
+    this.nameCompany,
+    this.directionCompany,
+    this.cityCompany,
+    this.countryCompany,
+    this.nameAdmin,
+    this.lastNameAdmin,
+    this.fecha,
+    required this.onPressedSellers,
+    required this.onPressedRoutes,
     required this.onPressedArticles,
-    required this.onPressedSetting,
+    required this.onPressedListPrice,
+    required this.onPressedVisitinProgram,
+    required this.onPressedPromotion,
     required this.onPressedInformation,
-    required this.stateColorClient,
-    required this.stateColorOrders,
-    required this.stateColorArticle,
-    required this.stateColorSetting,
-    required this.stateColorInformation,
-    required this.onPressedReports,
-    required this.stateColorReport,
+    required this.stateColorSelectSellers,
+    required this.stateColorSelectRoutes,
+    required this.stateColorSelectArticle,
+    required this.stateColorSelectListPrice,
+    required this.stateColorSelectVisitingProgram,
+    required this.stateColorSelectPromotion,
+    required this.stateColorSelectInformation,
   }) : super(key: key);
 
-  final String nameSeller;
-  final String route;
-  final String date;
-  final String warehouse;
-  final String guide;
-  final String typeSale;
-  final Function() onPressedClient;
-  final Function() onPressedOrders;
+  final String? nameCompany;
+  final String? directionCompany;
+  final String? cityCompany;
+  final String? countryCompany;
+  final String? nameAdmin;
+  final String? lastNameAdmin;
+  final String? fecha;
+  final Function() onPressedSellers;
+  final Function() onPressedRoutes;
   final Function() onPressedArticles;
-  final Function() onPressedReports;
-  final Function() onPressedSetting;
+  final Function() onPressedListPrice;
+  final Function() onPressedVisitinProgram;
+  final Function() onPressedPromotion;
   final Function() onPressedInformation;
-  final bool stateColorClient;
-  final bool stateColorOrders;
-  final bool stateColorArticle;
-  final bool stateColorReport;
-  final bool stateColorSetting;
-  final bool stateColorInformation;
+
+  final bool stateColorSelectSellers;
+  final bool stateColorSelectRoutes;
+  final bool stateColorSelectArticle;
+  final bool stateColorSelectListPrice;
+  final bool stateColorSelectVisitingProgram;
+  final bool stateColorSelectPromotion;
+  final bool stateColorSelectInformation;
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +58,15 @@ class MenuDrawer extends StatelessWidget {
         DrawerHeader(
           margin: EdgeInsets.all(0),
           padding: EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 0),
-          //decoration: BoxDecoration(color: white),
           child: Stack(
             children: [
               Align(
-                alignment: Alignment.centerLeft - Alignment(0.0, 0.20),
+                alignment: Alignment.centerLeft - Alignment(0.0, 0.80),
                 child: CircleAvatar(
                   backgroundColor: gray,
                   radius: 40.0,
                   child: Text(
-                    'W',
+                    'A',
                     style: TextStyle(
                       fontFamily: 'Oswald',
                       color: white,
@@ -82,9 +88,9 @@ class MenuDrawer extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment.topRight + Alignment(0, .3),
+                alignment: Alignment.topRight + Alignment(0, 0.3),
                 child: Text(
-                  nameSeller,
+                  '$nameAdmin',
                   style: TextStyle(
                     fontFamily: 'Oswald',
                     color: gray,
@@ -93,9 +99,9 @@ class MenuDrawer extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment.topRight + Alignment(0, .6),
+                alignment: Alignment.topRight + Alignment(0, 0.6),
                 child: Text(
-                  'Ruta: $route',
+                  'Apellidos: $lastNameAdmin',
                   style: TextStyle(
                     fontFamily: 'Oswald',
                     color: gray,
@@ -106,7 +112,7 @@ class MenuDrawer extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight + Alignment(0, 0.9),
                 child: Text(
-                  'Fecha: $date',
+                  'Pais: $cityCompany',
                   style: TextStyle(
                     fontFamily: 'Oswald',
                     color: gray,
@@ -117,33 +123,47 @@ class MenuDrawer extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight + Alignment(0, 1.2),
                 child: Text(
-                  'Almacen: $warehouse',
+                  'Ciudad: $countryCompany',
                   style: TextStyle(
                     fontFamily: 'Oswald',
                     color: gray,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ),
               Align(
                 alignment: Alignment.topRight + Alignment(0, 1.5),
                 child: Text(
-                  'Guia: $guide',
+                  'Fecha: $fecha',
                   style: TextStyle(
                     fontFamily: 'Oswald',
                     color: gray,
-                    fontSize: 16,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Container(
+                width: 180,
+                child: Align(
+                  alignment: Alignment.topLeft + Alignment(0, 1.5),
+                  child: Text(
+                    '$nameCompany',
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      color: gray,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),
               Align(
                 alignment: Alignment.topLeft + Alignment(0, 1.9),
                 child: Text(
-                  '$typeSale',
+                  '$directionCompany',
                   style: TextStyle(
                     fontFamily: 'Oswald',
                     color: gray,
-                    fontSize: 18,
+                    fontSize: 14,
                   ),
                 ),
               ),
@@ -162,27 +182,27 @@ class MenuDrawer extends StatelessWidget {
                   height: 20.0,
                 ),
                 ListTile(
-                  onTap: onPressedClient,
+                  onTap: onPressedSellers,
                   leading: Icon(CupertinoIcons.person_3_fill,
-                      color: stateColorClient ? Colors.blue : gray),
+                      color: stateColorSelectSellers ? Colors.blue : gray),
                   title: Text(
-                    'Clientes',
+                    'Vendedores',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorClient ? Colors.blue : gray,
+                      color: stateColorSelectSellers ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),
                 ),
                 ListTile(
-                  onTap: onPressedOrders,
-                  leading: Icon(CupertinoIcons.cart_badge_plus,
-                      color: stateColorOrders ? Colors.blue : gray),
+                  onTap: onPressedRoutes,
+                  leading: Icon(CupertinoIcons.arrow_swap,
+                      color: stateColorSelectRoutes ? Colors.blue : gray),
                   title: Text(
-                    'Pedidos',
+                    'Rutas',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorOrders ? Colors.blue : gray,
+                      color: stateColorSelectRoutes ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),
@@ -190,51 +210,66 @@ class MenuDrawer extends StatelessWidget {
                 ListTile(
                   onTap: onPressedArticles,
                   leading: Icon(CupertinoIcons.square_stack_3d_down_right,
-                      color: stateColorArticle ? Colors.blue : gray),
+                      color: stateColorSelectArticle ? Colors.blue : gray),
                   title: Text(
                     'Articulos',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorArticle ? Colors.blue : gray,
+                      color: stateColorSelectArticle ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),
                 ),
                 ListTile(
-                  onTap: onPressedReports,
-                  leading: Icon(Icons.info,
-                      color: stateColorReport ? Colors.blue : gray),
+                  onTap: onPressedListPrice,
+                  leading: Icon(Icons.monetization_on_outlined,
+                      color: stateColorSelectListPrice ? Colors.blue : gray),
                   title: Text(
-                    'Reportes',
+                    'Listas Precios',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorReport ? Colors.blue : gray,
+                      color: stateColorSelectListPrice ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),
                 ),
                 ListTile(
-                  onTap: onPressedSetting,
-                  leading: Icon(Icons.app_settings_alt_sharp,
-                      color: stateColorSetting ? Colors.blue : gray),
+                  onTap: onPressedVisitinProgram,
+                  leading: Icon(Icons.account_tree_outlined,
+                      color:
+                          stateColorSelectVisitingProgram ? Colors.blue : gray),
                   title: Text(
-                    'Configuración',
+                    'Programación Visita',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorSetting ? Colors.blue : gray,
+                      color:
+                          stateColorSelectVisitingProgram ? Colors.blue : gray,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: onPressedPromotion,
+                  leading: Icon(Icons.account_balance_wallet_outlined,
+                      color: stateColorSelectPromotion ? Colors.blue : gray),
+                  title: Text(
+                    'Promociones',
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      color: stateColorSelectPromotion ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),
                 ),
                 ListTile(
                   onTap: onPressedInformation,
-                  leading: Icon(Icons.info,
-                      color: stateColorInformation ? Colors.blue : gray),
+                  leading: Icon(Icons.info_outline_rounded,
+                      color: stateColorSelectInformation ? Colors.blue : gray),
                   title: Text(
                     'Información',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorInformation ? Colors.blue : gray,
+                      color: stateColorSelectInformation ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),

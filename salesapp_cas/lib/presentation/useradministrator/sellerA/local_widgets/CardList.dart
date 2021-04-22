@@ -5,32 +5,36 @@ import 'package:salesapp_cas/utils/colors_constants.dart';
 class CardList extends StatelessWidget {
   const CardList(
       {Key? key,
-      this.constrains,
-      this.nameClient = 'WILLIAMS M. TORRES',
-      this.rucClient = '45415098',
-      this.codClient = '1',
-      this.lPriceClient = '1',
-      this.secClient = '1',
-      this.phoneClient = '982057542',
-      this.observationClient = 'Visita medio dia.',
-      this.directionClient = 'Jiron Martir Olaya 1097 SMP',
-      this.valueGeoreference = true})
+      required this.constrains,
+      this.personId = 1017,
+      this.name = 'Williams M.',
+      this.lastName = 'Torres Bajonero',
+      this.dni = '45415098',
+      this.phone = '932580766',
+      this.description = 'Vendedor',
+      this.email = 'wmtorresb@gmail.com',
+      this.direction = 'Jiron Martir Olaya 1097 SMP',
+      this.city = 'Peru',
+      this.country = 'Lima',
+      this.state = 'A'})
       : super(key: key);
-  final BoxConstraints? constrains;
-  final String nameClient;
-  final String rucClient;
-  final String codClient;
-  final String lPriceClient;
-  final String secClient;
-  final String phoneClient;
-  final String observationClient;
-  final String directionClient;
-  final bool valueGeoreference;
+  final Size constrains;
+  final int personId;
+  final String name;
+  final String lastName;
+  final String dni;
+  final String phone;
+  final String description;
+  final String email;
+  final String direction;
+  final String city;
+  final String country;
+  final String state;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 85,
-      width: constrains!.maxWidth,
+      height: 90,
+      width: constrains.width,
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.all(
@@ -41,8 +45,8 @@ class CardList extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         child: Stack(children: [
           Positioned(
-            top: 20,
-            left: 0,
+            top: 23,
+            left: 6,
             child: CircleAvatar(
               backgroundColor: gray,
               radius: 15.0,
@@ -53,114 +57,123 @@ class CardList extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 0,
-            left: 40.0,
-            child: Text(
-              '$nameClient',
-              style: TextStyle(
-                fontFamily: 'Oswald',
-                color: gray,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+              top: 0,
+              left: 50,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '$name $lastName',
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      color: gray,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Tipo: $description',
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      color: gray,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              )),
           Positioned(
-            top: 0,
+            top: 22,
+            left: 50,
             right: 0,
-            child: Icon(
-                valueGeoreference
-                    ? CupertinoIcons.placemark_fill
-                    : CupertinoIcons.placemark,
-                color: valueGeoreference
-                    ? Colors.lightGreen
-                    : Colors.grey), //placemark_fill
-          ),
-          Positioned(
-            top: 20,
-            left: 40.0,
-            right: 50,
             child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Text(
-                'DNI: $rucClient',
+                'DNI: $dni',
                 style: TextStyle(
                   fontFamily: 'Oswald',
                   color: gray,
-                  fontSize: 11,
+                  fontSize: 12,
                 ),
               ),
               SizedBox(
                 width: 5,
               ),
               Text(
-                'Código: $codClient',
+                'Código: $personId',
                 style: TextStyle(
                   fontFamily: 'Oswald',
                   color: gray,
-                  fontSize: 11,
+                  fontSize: 12,
                 ),
               ),
               SizedBox(
                 width: 5,
               ),
               Text(
-                'LPrecio: $lPriceClient',
+                'Telefono: $phone',
                 style: TextStyle(
                   fontFamily: 'Oswald',
                   color: gray,
-                  fontSize: 11,
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Sec: $secClient',
-                style: TextStyle(
-                  fontFamily: 'Oswald',
-                  color: gray,
-                  fontSize: 11,
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Tlf: $phoneClient',
-                style: TextStyle(
-                  fontFamily: 'Oswald',
-                  color: gray,
-                  fontSize: 11,
+                  fontSize: 12,
                 ),
               ),
             ]),
           ),
           Positioned(
-            top: 33,
-            left: 40.0,
+            top: 35,
+            left: 50,
             child: Text(
-              'Observación: $observationClient',
+              'Correo: $email',
               style: TextStyle(
                 fontFamily: 'Oswald',
                 color: gray,
-                fontSize: 11,
+                fontSize: 12,
               ),
             ),
           ),
           Positioned(
-            top: 47,
-            left: 40.0,
+              top: 47,
+              left: 50,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Pais: $city',
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      color: gray,
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Ciudad: $country',
+                    style: TextStyle(
+                      fontFamily: 'Oswald',
+                      color: gray,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              )),
+          Positioned(
+            top: 60,
+            left: 50,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: constrains!.maxWidth,
+                    width: constrains.width,
                     child: Text(
-                      '$directionClient',
+                      '$direction',
                       style: TextStyle(
                         fontFamily: 'Oswald',
                         color: gray,
-                        fontSize: 11,
+                        fontSize: 12,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.clip,

@@ -22,12 +22,16 @@ class _SplashViewState extends State<SplashView> {
     if (result == 0) {
       popAllAndPush(context, LoginView());
     } else if (result == 1) {
-      final typeUser = await _userUseCase.getUser();
-      if (typeUser.description == 'Administrador') {
-        print('Admin');
-        return popAllAndPush(context, HomeAdminView());
+      List _user = await _userUseCase.getUserDB();
+      if (_user.length != 0) {
+        if (_user[0].description == 'Administrador') {
+          return popAllAndPush(context, HomeAdminView());
+        }
+        if (_user[0].description == 'Vendedor') {
+          return popAllAndPush(context, HomeSellerView());
+        }
       } else {
-        return popAllAndPush(context, HomeSellerView());
+        return popAllAndPush(context, LoginView());
       }
     } else {
       popAllAndPush(context, LoginView());
@@ -40,6 +44,11 @@ class _SplashViewState extends State<SplashView> {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _init();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

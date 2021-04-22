@@ -24,19 +24,18 @@ class TextFieldPerzonalice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
       width: constraints.minWidth * 0.98,
       padding: EdgeInsets.only(left: 0.5, right: 0.5, top: 0.0, bottom: 0.0),
       child: TextFormField(
         controller: textController,
         onChanged: onChanged,
         scrollPadding: EdgeInsets.all(0),
-        style: TextStyle(color: blueOpac, fontSize: 13),
+        style: TextStyle(color: blueOpac, fontSize: 12),
         decoration: InputDecoration(
           labelText: labelText,
-          labelStyle: TextStyle(color: black, fontSize: 15),
+          labelStyle: TextStyle(color: black, fontSize: 12),
           hintText: hintText,
-          hintStyle: TextStyle(color: greyOsc, fontSize: 14),
+          hintStyle: TextStyle(color: greyOsc, fontSize: 11),
           border: InputBorder.none,
         ),
         obscureText: oscureText,

@@ -91,7 +91,7 @@ abstract class ShowDialogMessage {
     );
   }
 
-  static showDialogMessageWithSignUp(
+  static showDialogMessageWithRegister(
       BuildContext context, String title, String message) {
     showDialog(
       context: context,
@@ -111,6 +111,34 @@ abstract class ShowDialogMessage {
                 child: Text('Ok'),
                 onPressed: () {
                   pushAndReplaceToPage(context, LoginView());
+                }),
+          ],
+        );
+      },
+    );
+  }
+
+  static showDialogMessageWithRegisterPersonalice(
+      BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext _) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.pop(context, 'Registrado');
+                  Navigator.pop(context, 'Registrado');
                 }),
           ],
         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
 import 'package:salesapp_cas/presentation/userseller/homeS/homeSeller_view.dart';
 import '../../presentation/useradministrator/homeA/homeAdmin_view.dart';
@@ -7,6 +8,7 @@ import '../../helpers/get.dart';
 import '../../presentation/widgets/CurvePainter.dart';
 import '../../domain/exceptions/auth_exception.dart';
 import '../../domain/usecase/auth_usecase.dart';
+import '../../data/models/user/user.dart';
 import '../../presentation/widgets/ShowDialogMessage.dart';
 import '../../utils/colors_constants.dart';
 import '../../utils/dialogs.dart';
@@ -21,8 +23,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  var percentage = 0.0;
   final _authUseCase = Get.i.find<AuthUseCase>();
   final _userUseCase = Get.i.find<UserUseCase>();
+  final _sellerUseCase = Get.i.find<SellerUseCase>();
 
   bool _vPass = true;
 
@@ -35,35 +39,52 @@ class _LoginViewState extends State<LoginView> {
     return pushToPage(context, SignUpView());
   }
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future<void> _onLogIn() async {
     try {
-      ProgressDialog.show(context);
-      final result = await _authUseCase.onSubmit();
-      print(result);
-      ProgressDialog.dissmiss(context);
+      ProgressDialogp.show(context);
+      final result = await _authUseCase.onLogIn();
+      ProgressDialogp.dissmiss(context);
+
       if (result == 'entry') {
-        final typeUser = await _userUseCase.getUser();
-        if (typeUser.description == 'Administrador') {
-          print('Admin');
-          return popAllAndPush(context, HomeAdminView());
+        List<User> user = await _userUseCase.getUserDB();
+        if (user.length > 0) {
+          if (user[0].description == 'Administrador') {
+            return popAllAndPush(context, HomeAdminView());
+          } else {
+            return popAllAndPush(context, HomeSellerView());
+          }
         } else {
-          return popAllAndPush(context, HomeSellerView());
+          await _userUseCase.registerUserDB();
+          List<User> user = await _userUseCase.getUserDB();
+          if (user[0].description == 'Administrador') {
+            ProgressDialogp.showLoadInformation(context, 'Información');
+            await Future.delayed(Duration(seconds: 3));
+            await _sellerUseCase.registerAllWithSellerDB();
+            ProgressDialogp.dissmiss(context);
+            return popAllAndPush(context, HomeAdminView());
+          } else {
+            return popAllAndPush(context, HomeSellerView());
+          }
         }
       }
-      if (result == 'not entry') {
-        return ShowDialogMessage.showDialogMessage(
-            context, 'Información', 'Error de usuario y/o contraseña.');
-      }
-      if (result == 'typing') {
-        return ShowDialogMessage.showDialogMessage(
-            context, 'Información', 'Ingrese usuario y/o contraseña.');
-      }
+      return ShowDialogMessage.showDialogMessage(
+          context, 'Información', result);
     } on AppException catch (ex) {
       print(ex);
-      ProgressDialog.dissmiss(context);
+      ProgressDialogp.dissmiss(context);
       return ShowDialogMessage.showDialogMessage(
           context, 'Información', 'Servidor sin respuesta.');
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

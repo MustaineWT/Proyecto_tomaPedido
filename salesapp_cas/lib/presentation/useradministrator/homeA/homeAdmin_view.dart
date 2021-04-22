@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:salesapp_cas/data/datasource/userdb.dart';
+import 'package:salesapp_cas/data/models/user/user.dart';
+import 'package:salesapp_cas/presentation/useradministrator/sellerA/sellerAdmin_view.dart';
 import '../inibodyA/inibody_view.dart';
 import '../../../helpers/get.dart';
 import '../../../presentation/widgets/ShowDialogMessage.dart';
 import '../../../domain/usecase/auth_usecase.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'local_widget/AppBarPersonalize.dart';
 import 'local_widget/MenuDrawer.dart';
@@ -13,20 +18,21 @@ class HomeAdminView extends StatefulWidget {
 }
 
 class _HomeAdminViewState extends State<HomeAdminView> {
-  //final AuthUseCase _authUseCase;
   final _authUseCase = Get.i.find<AuthUseCase>();
 
   TextEditingController _searchController = TextEditingController();
 
-  bool _stateColorSelectClient = false;
-  bool _stateColorSelectOrders = false;
+  bool _stateColorSelectSellers = false;
+  bool _stateColorSelectRoutes = false;
   bool _stateColorSelectArticle = false;
-  bool _stateColorSelectReport = false;
-  bool _stateColorSelectSetting = false;
+  bool _stateColorSelectListPrice = false;
+  bool _stateColorSelectVisitingProgram = false;
+  bool _stateColorSelectPromotion = false;
   bool _stateColorSelectInformation = false;
 
   List<Widget> _listWidget = [
     IniBodyView(),
+    SellerAdminView(),
     IniBodyView(),
     IniBodyView(),
     IniBodyView(),
@@ -34,8 +40,9 @@ class _HomeAdminViewState extends State<HomeAdminView> {
     IniBodyView(),
     IniBodyView(),
   ];
-  List<bool> options = [false, false, false, false, false, false];
+  List<bool> options = [false, false, false, false, false, false, false];
   int _value = 0;
+  // ignore: unused_field
   String _search = '';
   String _nameOpcion = '';
 
@@ -43,11 +50,12 @@ class _HomeAdminViewState extends State<HomeAdminView> {
     _value = opcion + 1;
     _nameOpcion = nameOpcion;
     List<bool> opcions = [
-      _stateColorSelectClient,
-      _stateColorSelectOrders,
+      _stateColorSelectSellers,
+      _stateColorSelectRoutes,
       _stateColorSelectArticle,
-      _stateColorSelectReport,
-      _stateColorSelectSetting,
+      _stateColorSelectListPrice,
+      _stateColorSelectVisitingProgram,
+      _stateColorSelectPromotion,
       _stateColorSelectInformation
     ];
     for (int i = 0; i < opcions.length; i++) {
@@ -67,10 +75,18 @@ class _HomeAdminViewState extends State<HomeAdminView> {
         context, 'Información', 'Desea cerrar sesión.', _authUseCase.onLogout);
   }
 
+  String result = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      endDrawerEnableOpenDragGesture: false,
       appBar: PreferredSize(
         preferredSize: Size(size.width, 40),
         child: AppBarPersonalize(
@@ -84,38 +100,56 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       ),
       drawer: Drawer(
         elevation: 16.0,
-        child: MenuDrawer(
-          onPressedClient: () {
-            _onPressedOpcion(0, 'Clientes');
-            Navigator.pop(context);
-          },
-          onPressedOrders: () {
-            _onPressedOpcion(1, 'Pedidos');
-            Navigator.pop(context);
-          },
-          onPressedArticles: () {
-            _onPressedOpcion(2, 'Articulos');
-            Navigator.pop(context);
-          },
-          onPressedReports: () {
-            _onPressedOpcion(3, 'Reportes');
-            Navigator.pop(context);
-          },
-          onPressedSetting: () {
-            _onPressedOpcion(4, 'Configuración');
-            Navigator.pop(context);
-          },
-          onPressedInformation: () {
-            _onPressedOpcion(5, 'Información');
-            Navigator.pop(context);
-          },
-          stateColorClient: options[0],
-          stateColorOrders: options[1],
-          stateColorArticle: options[2],
-          stateColorReport: options[3],
-          stateColorSetting: options[4],
-          stateColorInformation: options[5],
-        ),
+        child: ValueListenableBuilder(
+            valueListenable: Hive.box<User>(USER).listenable(),
+            builder: (context, Box<User> box, _) {
+              final _user = box.values.toList();
+              return MenuDrawer(
+                nameCompany: _user[0].bussinesName,
+                directionCompany: _user[0].direction,
+                cityCompany: _user[0].cityBranch,
+                countryCompany: _user[0].country,
+                nameAdmin: _user[0].name,
+                lastNameAdmin: _user[0].lastName,
+                //fecha: _user.fecha.toString().substring(0, 10),
+                fecha: _user[0].fecha.toString().substring(0, 10),
+                onPressedSellers: () {
+                  _onPressedOpcion(0, 'Vendedores');
+                  Navigator.pop(context);
+                },
+                onPressedRoutes: () {
+                  _onPressedOpcion(1, 'Rutas');
+                  Navigator.pop(context);
+                },
+                onPressedArticles: () {
+                  _onPressedOpcion(2, 'Articulos');
+                  Navigator.pop(context);
+                },
+                onPressedListPrice: () {
+                  _onPressedOpcion(3, 'Precios');
+                  Navigator.pop(context);
+                },
+                onPressedVisitinProgram: () {
+                  _onPressedOpcion(4, 'Programación');
+                  Navigator.pop(context);
+                },
+                onPressedPromotion: () {
+                  _onPressedOpcion(5, 'Promociones');
+                  Navigator.pop(context);
+                },
+                onPressedInformation: () {
+                  _onPressedOpcion(6, 'Información');
+                  Navigator.pop(context);
+                },
+                stateColorSelectSellers: options[0],
+                stateColorSelectRoutes: options[1],
+                stateColorSelectArticle: options[2],
+                stateColorSelectListPrice: options[3],
+                stateColorSelectVisitingProgram: options[4],
+                stateColorSelectPromotion: options[5],
+                stateColorSelectInformation: options[6],
+              );
+            }),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

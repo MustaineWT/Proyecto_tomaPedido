@@ -1,8 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:salesapp_cas/data/datasource/sellerdb.dart';
+import 'package:salesapp_cas/data/datasource/userdb.dart';
 import 'package:salesapp_cas/data/services/local/local_auth_api.dart';
 import 'package:salesapp_cas/data/services/remote/authentication_api.dart';
+import 'package:salesapp_cas/data/services/remote/seller_api.dart';
 import 'package:salesapp_cas/data/services/remote/user_api.dart';
 import 'package:salesapp_cas/domain/usecase/auth_usecase.dart';
+import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,20 +22,29 @@ abstract class DependencyInjection {
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
-    Dio dio = new Dio(options);
 
+    Dio dio = new Dio(options);
     final authApi = AuthenticationApi(dio);
-    final userApi = UserApi(dio);
     final localAuthApi = LocalAuthApi(prefs);
     final preferencesProvider = UserApi(dio);
 
+    final userApi = UserApi(dio);
+    final sellerApi = SellerApi(dio);
+
+    final userDB = UserDB();
+    final sellerDB = SellerDB();
+
     final authUseCase = AuthUseCase(authApi, localAuthApi);
-    final userUseCase = UserUseCase(userApi, localAuthApi);
+    final userUseCase = UserUseCase(userApi, localAuthApi, userDB);
+    final sellerUseCase =
+        SellerUseCase(sellerApi, localAuthApi, sellerDB, userDB);
 
     Get.i.put<AuthUseCase>(authUseCase);
-    Get.i.put<UserUseCase>(userUseCase);
-    Get.i.put<UserApi>(preferencesProvider);
     Get.i.put<LocalAuthApi>(localAuthApi);
+    Get.i.put<UserApi>(preferencesProvider);
+    Get.i.put<UserUseCase>(userUseCase);
+    Get.i.put<UserDB>(userDB);
+    Get.i.put<SellerUseCase>(sellerUseCase);
 
     Get.i.put<VoidCallback>(dispose, tag: 'dispose');
   }

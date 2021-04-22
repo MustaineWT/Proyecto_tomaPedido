@@ -7,4 +7,6 @@ abstract class AppRoutes {
   static const HOMEADMIN = '/homeadmin';
   static const SIGNUP = '/signup';
   static const CLIENT = '/client';
+  static const REGSELLER = '/regseller';
+  static const SELLER = '/seller';
 }

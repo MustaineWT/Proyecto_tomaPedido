@@ -11,7 +11,6 @@ if (process.env.urlDBSQL === 'Desarrollo') {
             enableArithAbort: true,
         }
     });
-
 }
 
 if (process.env.urlDBSQL === 'DesaCasa') {
@@ -24,7 +23,6 @@ if (process.env.urlDBSQL === 'DesaCasa') {
             enableArithAbort: true
         }
     });
-
 }
 
 if (process.env.urlDBSQL === 'Produccion') {
@@ -37,5 +35,4 @@ if (process.env.urlDBSQL === 'Produccion') {
             enableArithAbort: true
         }
     });
-
 }

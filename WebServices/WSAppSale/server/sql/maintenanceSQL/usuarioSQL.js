@@ -33,6 +33,8 @@ exports.executeSql = function (sql, params, proceso, callback) {
             }
             if (proceso === 'RegisterUserSeller') {
                 var req = new sqlDb.Request(conn);
+                req.input('CompanyId', params.CompanyId);
+                req.input('BranchOfficeId', params.BranchOfficeId);
                 req.input('Name', params.Name);
                 req.input('LastName', params.LastName);
                 req.input('Direction', params.Direction);
@@ -55,6 +57,18 @@ exports.executeSql = function (sql, params, proceso, callback) {
             if (proceso === 'SelectUser') {
                 var req = new sqlDb.Request(conn);
                 req.input('PersonId', params.personid);
+                req.execute(sql).then(function (recordset) {
+                        callback(recordset.recordset);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        callback(null, err);
+                    });
+            }
+            if (proceso === 'SelectUserSeller') {
+                var req = new sqlDb.Request(conn);
+                req.input('CompanyId', params.CompanyId);
+                req.input('BranchOfficeId', params.BranchOfficeId);
                 req.execute(sql).then(function (recordset) {
                         callback(recordset.recordset);
                     })
