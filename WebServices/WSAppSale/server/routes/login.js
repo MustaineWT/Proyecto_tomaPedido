@@ -48,13 +48,8 @@ app.post('/Api/v1/login', (req, res) => {
                 personid: hashPassword[0].PersonId,
                 message: 'Process Complete'
             });
-
         }
-
-
-
     });
-
 });
 
 //Configuraciones de Google

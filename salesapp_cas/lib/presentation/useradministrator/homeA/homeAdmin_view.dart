@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:salesapp_cas/data/datasource/userdb.dart';
 import 'package:salesapp_cas/data/models/user/user.dart';
+import 'package:salesapp_cas/presentation/useradministrator/routeA/routeAdmin_view.dart';
 import 'package:salesapp_cas/presentation/useradministrator/sellerA/sellerAdmin_view.dart';
 import '../inibodyA/inibody_view.dart';
 import '../../../helpers/get.dart';
@@ -33,7 +34,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
   List<Widget> _listWidget = [
     IniBodyView(),
     SellerAdminView(),
-    IniBodyView(),
+    RouteAdminView(),
     IniBodyView(),
     IniBodyView(),
     IniBodyView(),
@@ -52,9 +53,9 @@ class _HomeAdminViewState extends State<HomeAdminView> {
     List<bool> opcions = [
       _stateColorSelectSellers,
       _stateColorSelectRoutes,
-      _stateColorSelectArticle,
-      _stateColorSelectListPrice,
       _stateColorSelectVisitingProgram,
+      _stateColorSelectListPrice,
+      _stateColorSelectArticle,
       _stateColorSelectPromotion,
       _stateColorSelectInformation
     ];

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/data/datasource/routesdb.dart';
 import 'package:salesapp_cas/data/datasource/sellerdb.dart';
 import 'package:salesapp_cas/data/datasource/userdb.dart';
 import 'package:salesapp_cas/utils/logs.dart';
@@ -13,6 +14,7 @@ class AuthUseCase {
   final LocalAuthRepository _localAuthRepository;
   UserDB _userDB = UserDB();
   SellerDB _sellerDB = SellerDB();
+  RoutesDB _routesDB = RoutesDB();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -55,10 +57,9 @@ class AuthUseCase {
   }
 
   Future<bool> onLogout() async {
-    await _userDB.deleteUser();
     await _userDB.disposeUser();
-    await _sellerDB.deleteSeller();
     await _sellerDB.disposeSeller();
+    await _routesDB.disposeRoute();
     await _authenticationRepository.logoutSession();
     return true;
   }

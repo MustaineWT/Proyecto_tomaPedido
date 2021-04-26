@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ButtonSignUp extends StatelessWidget {
-  const ButtonSignUp({
+class ButtonRegister extends StatelessWidget {
+  const ButtonRegister({
     Key? key,
     required this.onSubmit,
     required this.value,

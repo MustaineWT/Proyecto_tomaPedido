@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
-import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
+import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
 import 'package:salesapp_cas/helpers/get.dart';
 import 'package:salesapp_cas/presentation/widgets/CurvePainter.dart';
 import 'package:salesapp_cas/presentation/widgets/ShowDialogMessage.dart';
 import 'package:salesapp_cas/utils/dialogs.dart';
 
-import 'local_widget/formRegisterSeller.dart';
+import 'form_routes.dart';
 
-class RegisterSellerView extends StatefulWidget {
-  const RegisterSellerView({
+class FormRegisterRoutes extends StatefulWidget {
+  const FormRegisterRoutes({
     Key? key,
   }) : super(key: key);
   @override
-  _RegisterSellerViewState createState() => _RegisterSellerViewState();
+  _FormRegisterRoutesState createState() => _FormRegisterRoutesState();
 }
 
-class _RegisterSellerViewState extends State<RegisterSellerView> {
-  final _sellerUseCase = Get.i.find<SellerUseCase>();
+class _FormRegisterRoutesState extends State<FormRegisterRoutes> {
+  final _routesUseCase = Get.i.find<RoutesUseCase>();
 
-  Future<void> _onRegisterSeller() async {
+  Future<void> _onRegisterRoutes() async {
     try {
       ProgressDialogp.show(context);
-      final result = await _sellerUseCase.registerSeller();
+      final result = await _routesUseCase.registerRoute();
       ProgressDialogp.dissmiss(context);
-      if (result == 'Vendedor Registrado') {
+      if (result == 'Route Created') {
         return ShowDialogMessage.showDialogMessageWithRegisterPersonalice(
-            context, 'Información', 'Vendedor registrado correctamente.');
+            context, 'Información', 'Ruta registrada correctamente.');
       } else {
         return ShowDialogMessage.showDialogMessage(
             context, 'Información', result);
@@ -61,10 +61,10 @@ class _RegisterSellerViewState extends State<RegisterSellerView> {
               ])),
               child: CustomPaint(
                 painter: CurvePainter(),
-                child: FormRegisterSeller(
-                  sellerUseCase: _sellerUseCase,
+                child: FormRoutes(
+                  routesUseCase: _routesUseCase,
                   constraints: constraints,
-                  singUp: _onRegisterSeller,
+                  register: _onRegisterRoutes,
                 ),
               ),
             ),

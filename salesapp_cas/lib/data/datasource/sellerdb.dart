@@ -15,6 +15,7 @@ class SellerDB {
   addSeller(Seller seller) async {
     await disposeSeller();
     final sellerBox = await getOpenSellerBox();
+    //int result = await Hive.box<Seller>(SELLER).add(seller);
     int result = await sellerBox.add(seller);
     return result;
   }

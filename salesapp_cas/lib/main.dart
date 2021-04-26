@@ -4,10 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:salesapp_cas/data/datasource/sellerdb.dart';
+import 'data/datasource/routesdb.dart';
+
 import 'data/models/seller/seller.dart';
+import 'data/models/user/user.dart';
+import 'data/models/route/routes.dart';
+
 import 'routes/app_pages.dart';
 import 'helpers/DependencyInjection.dart';
-import 'data/models/user/user.dart';
 
 void main() async {
   //SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
@@ -22,7 +26,11 @@ void main() async {
   Hive.init(path.path);
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(SellerAdapter());
+  Hive.registerAdapter(RoutesAdapter());
   Hive.openBox<Seller>(SELLER, compactionStrategy: (entries, deletedEntries) {
+    return deletedEntries > 1;
+  });
+  Hive.openBox<Routes>(ROUTE, compactionStrategy: (entries, deletedEntries) {
     return deletedEntries > 1;
   });
   await DependencyInjection.initialize();

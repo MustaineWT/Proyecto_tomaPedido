@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
 
-class CardList extends StatelessWidget {
-  const CardList(
+class CardInfo extends StatelessWidget {
+  const CardInfo(
       {Key? key,
       required this.constrains,
       this.personId = 1017,

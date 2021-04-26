@@ -208,14 +208,16 @@ class MenuDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: onPressedArticles,
-                  leading: Icon(CupertinoIcons.square_stack_3d_down_right,
-                      color: stateColorSelectArticle ? Colors.blue : gray),
+                  onTap: onPressedVisitinProgram,
+                  leading: Icon(Icons.account_tree_outlined,
+                      color:
+                          stateColorSelectVisitingProgram ? Colors.blue : gray),
                   title: Text(
-                    'Articulos',
+                    'Programación Visita',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: stateColorSelectArticle ? Colors.blue : gray,
+                      color:
+                          stateColorSelectVisitingProgram ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),
@@ -234,16 +236,14 @@ class MenuDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: onPressedVisitinProgram,
-                  leading: Icon(Icons.account_tree_outlined,
-                      color:
-                          stateColorSelectVisitingProgram ? Colors.blue : gray),
+                  onTap: onPressedArticles,
+                  leading: Icon(CupertinoIcons.square_stack_3d_down_right,
+                      color: stateColorSelectArticle ? Colors.blue : gray),
                   title: Text(
-                    'Programación Visita',
+                    'Articulos',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color:
-                          stateColorSelectVisitingProgram ? Colors.blue : gray,
+                      color: stateColorSelectArticle ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),

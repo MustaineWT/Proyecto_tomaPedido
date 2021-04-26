@@ -3,20 +3,20 @@ import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
 import 'package:salesapp_cas/utils/TextFieldPerzonalice.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
 
-import 'ButtonSignUp.dart';
+import 'button_register.dart';
 
-class FormRegisterSeller extends StatelessWidget {
-  const FormRegisterSeller({
+class FormSeller extends StatelessWidget {
+  const FormSeller({
     Key? key,
     required SellerUseCase sellerUseCase,
     required this.constraints,
-    required this.singUp,
+    required this.register,
   })   : _sellerUseCase = sellerUseCase,
         super(key: key);
 
   final SellerUseCase _sellerUseCase;
   final BoxConstraints constraints;
-  final Function() singUp;
+  final Function() register;
 
   @override
   Widget build(BuildContext context) {
@@ -209,9 +209,9 @@ class FormRegisterSeller extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          ButtonSignUp(
+                          ButtonRegister(
                             value: true,
-                            onSubmit: singUp,
+                            onSubmit: register,
                           ),
                         ],
                       ),

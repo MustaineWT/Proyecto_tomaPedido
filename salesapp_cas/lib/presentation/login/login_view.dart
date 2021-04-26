@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
 import 'package:salesapp_cas/presentation/userseller/homeS/homeSeller_view.dart';
@@ -27,6 +28,7 @@ class _LoginViewState extends State<LoginView> {
   final _authUseCase = Get.i.find<AuthUseCase>();
   final _userUseCase = Get.i.find<UserUseCase>();
   final _sellerUseCase = Get.i.find<SellerUseCase>();
+  final _routesUseCase = Get.i.find<RoutesUseCase>();
 
   bool _vPass = true;
 
@@ -65,6 +67,7 @@ class _LoginViewState extends State<LoginView> {
             ProgressDialogp.showLoadInformation(context, 'Información');
             await Future.delayed(Duration(seconds: 3));
             await _sellerUseCase.registerAllWithSellerDB();
+            await _routesUseCase.registerAllWithRouteDB();
             ProgressDialogp.dissmiss(context);
             return popAllAndPush(context, HomeAdminView());
           } else {
