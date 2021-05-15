@@ -3,7 +3,10 @@ import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
 import 'package:salesapp_cas/utils/TextFieldPerzonalice.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
 
+import 'button_back.dart';
 import 'button_register.dart';
+import 'button_visit.dart';
+import 'text_title.dart';
 
 class FormRoutes extends StatelessWidget {
   const FormRoutes({
@@ -30,32 +33,8 @@ class FormRoutes extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: blue,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromRGBO(30, 144, 255, .3),
-                              blurRadius: 30,
-                              offset: Offset(0, 10))
-                        ]),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: white,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
-                  ),
-                  Text('Registro de Vendedor',
-                      style: TextStyle(
-                          fontFamily: 'Oswald',
-                          color: blackv2,
-                          fontSize: constraints.maxWidth * 0.07)),
+                  ButtonBack(),
+                  TextTitle(constraints: constraints),
                 ],
               ),
             ],
@@ -64,7 +43,6 @@ class FormRoutes extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(2.0),
           child: Container(
-            //height: size.height * 0.88,
             decoration: BoxDecoration(
               color: blackv2,
             ),
@@ -85,61 +63,88 @@ class FormRoutes extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Datos del Vendedor',
+                            'Datos del Ruta',
                             style: TextStyle(
                               color: blueOpac,
                               fontFamily: 'Oswald',
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            padding: EdgeInsets.all(0),
-                            height: 45,
-                            width: constraints.maxWidth * 0.87,
-                            child: TextFieldPerzonalice(
-                                constraints: constraints,
-                                hintText: 'Ruta',
-                                labelText: 'Nro de Ruta:',
-                                onChanged: _routesUseCase.changedRoute,
-                                textController: _routesUseCase.routeController),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            padding: EdgeInsets.all(0),
-                            height: 45,
-                            width: constraints.maxWidth * 0.87,
-                            child: TextFieldPerzonalice(
-                                constraints: constraints,
-                                hintText: 'Descripción',
-                                labelText: 'Descripción de ruta:',
-                                onChanged: _routesUseCase.changedDescription,
-                                textController:
-                                    _routesUseCase.descriptionController),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            padding: EdgeInsets.all(0),
-                            height: 45,
-                            width: constraints.maxWidth * 0.87,
-                            child: TextFieldPerzonalice(
+                          TextFieldPerzonalice(
                               constraints: constraints,
-                              hintText: 'Zona',
-                              labelText: 'Nro Zona:',
-                              onChanged: _routesUseCase.changedZone,
-                              textController: _routesUseCase.zoneController,
-                            ),
+                              hintText: 'Ruta',
+                              labelText: 'Nro de Ruta:',
+                              onChanged: _routesUseCase.changedRoute,
+                              textController: _routesUseCase.routeController),
+                          TextFieldPerzonalice(
+                              constraints: constraints,
+                              hintText: 'Descripción',
+                              labelText: 'Descripción de ruta:',
+                              onChanged: _routesUseCase.changedDescription,
+                              textController:
+                                  _routesUseCase.descriptionController),
+                          TextFieldPerzonalice(
+                            constraints: constraints,
+                            hintText: 'Zona',
+                            labelText: 'Nro Zona:',
+                            onChanged: _routesUseCase.changedZone,
+                            textController: _routesUseCase.zoneController,
                           ),
+                          TextFieldPerzonalice(
+                              constraints: constraints,
+                              hintText: 'Fuerza de Venta',
+                              labelText: 'FFVV:',
+                              onChanged: _routesUseCase.changedFfvv,
+                              textController: _routesUseCase.ffvvController),
                           Container(
                             margin: EdgeInsets.all(0),
                             padding: EdgeInsets.all(0),
-                            height: 45,
+                            height: 20,
                             width: constraints.maxWidth * 0.87,
-                            child: TextFieldPerzonalice(
-                                constraints: constraints,
-                                hintText: 'Fuerza de Venta',
-                                labelText: 'FFVV:',
-                                onChanged: _routesUseCase.changedFfvv,
-                                textController: _routesUseCase.ffvvController),
+                            child: Text('Frecuencia de Visita'),
+                          ),
+                          Container(
+                            width: constraints.maxWidth,
+                            height: 80,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                ButtonVisit(
+                                    nameCard: 'LU',
+                                    constraints: constraints,
+                                    value: true,
+                                    onTap: () {}),
+                                ButtonVisit(
+                                    nameCard: 'MA',
+                                    constraints: constraints,
+                                    value: false,
+                                    onTap: () {}),
+                                ButtonVisit(
+                                    nameCard: 'MI',
+                                    constraints: constraints,
+                                    value: true,
+                                    onTap: () {}),
+                                ButtonVisit(
+                                    nameCard: 'JU',
+                                    constraints: constraints,
+                                    value: false,
+                                    onTap: () {}),
+                                ButtonVisit(
+                                    nameCard: 'VI',
+                                    constraints: constraints,
+                                    value: true,
+                                    onTap: () {}),
+                                ButtonVisit(
+                                    nameCard: 'SA',
+                                    constraints: constraints,
+                                    value: true,
+                                    onTap: () {}),
+                                ButtonVisit(
+                                    nameCard: 'DO',
+                                    constraints: constraints,
+                                    value: true,
+                                    onTap: () {}),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 10,

@@ -9,8 +9,21 @@ class RoutesApi extends RouteRepository {
 
   RoutesApi(this._dio);
   @override
-  Future<RequestToken> registerRoute(token, int companyId, int branchOfficeId,
-      String route, String description, String zone, String ffvv) async {
+  Future<RequestToken> registerRoute(
+      token,
+      int companyId,
+      int branchOfficeId,
+      String route,
+      String description,
+      String zone,
+      int mo,
+      int tu,
+      int we,
+      int th,
+      int fr,
+      int sa,
+      int su,
+      String ffvv) async {
     final response = await _dio.post(
       '/Route',
       data: {
@@ -19,6 +32,13 @@ class RoutesApi extends RouteRepository {
         'Route': route,
         'Description': description,
         'Zone': zone,
+        'Mo': zone,
+        'Tu': zone,
+        'We': zone,
+        'Th': zone,
+        'Fr': zone,
+        'Sa': zone,
+        'Su': zone,
         'Ffvv': ffvv
       },
       options: Options(

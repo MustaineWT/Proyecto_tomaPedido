@@ -1,11 +1,7 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 var db = require("../../sql/report/reportingsalSQL");
 var xlsx = require("xlsx");
-const {
-  verificaToken,
-  verificaTAdmin_Role,
-} = require("../../middlewares/autenticacion");
+const { verificaToken } = require("../../middlewares/autenticacion");
 
 const app = express();
 

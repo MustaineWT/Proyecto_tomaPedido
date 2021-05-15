@@ -14,21 +14,15 @@ class SellerAdminView extends StatefulWidget {
 
 class _SellerAdminViewState extends State<SellerAdminView> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Stack(children: [
       Container(
         width: size.width,
         height: size.height - 63,
         decoration: BoxDecoration(color: white),
         child: ValueListenableBuilder(
-            valueListenable: Hive.box<Seller>(SELLER).listenable(),
+            valueListenable: SellerDB.getOpenSellerBox().listenable(),
             builder: (context, Box<Seller> _sellerBox, _) {
               return ListView.builder(
                 itemCount: _sellerBox.values.length,

@@ -22,6 +22,7 @@ class RoutesUseCase {
   final ffvvController = TextEditingController();
 
   String _route = '', _description = '', _zone = '', _ffvv = '';
+  int _mo = 0, _tu = 0, _we = 0, _th = 0, _fr = 0, _sa = 0, _su = 0;
 
   void changedRoute(String route) {
     _route = route;
@@ -33,6 +34,34 @@ class RoutesUseCase {
 
   void changedZone(String zone) {
     _zone = zone;
+  }
+
+  void changedMo(int mo) {
+    _mo = mo;
+  }
+
+  void changedTu(int tu) {
+    _tu = tu;
+  }
+
+  void changedWe(int we) {
+    _we = we;
+  }
+
+  void changedTh(int th) {
+    _th = th;
+  }
+
+  void changedFr(int fr) {
+    _fr = fr;
+  }
+
+  void changedSa(int sa) {
+    _sa = sa;
+  }
+
+  void changedSu(int su) {
+    _su = su;
   }
 
   void changedFfvv(String ffvv) {
@@ -59,6 +88,13 @@ class RoutesUseCase {
             _route,
             _description,
             _zone,
+            _mo,
+            _tu,
+            _we,
+            _th,
+            _fr,
+            _sa,
+            _su,
             _ffvv);
         if (response.status) {
           final route = Routes(
@@ -67,6 +103,13 @@ class RoutesUseCase {
               route: _route,
               description: _description,
               zone: _zone,
+              mo: _mo,
+              tu: _tu,
+              we: _we,
+              th: _th,
+              fr: _fr,
+              sa: _sa,
+              su: _su,
               ffvv: int.parse(_ffvv),
               state: 'A');
           await registerRouteDB(route);
@@ -81,8 +124,8 @@ class RoutesUseCase {
     }
   }
 
-  getRouteDB() async {
-    //*Obtiene todos los datos del Hive.
+  /*  getRouteDB() async {
+    *Obtiene todos los datos del Hive.
     try {
       final route = await _routesDB.getAllRoutes();
       if (route != null) {
@@ -92,6 +135,14 @@ class RoutesUseCase {
       Logs.p.e(dioError);
       throw AppException.fromDioError(dioError);
     }
+  } */
+
+  disposeRouteDB() async {
+    await _routesDB.disposeRoute();
+  }
+
+  openRouteDB() async {
+    await _routesDB.openBoxRoutesDB();
   }
 
   registerRouteDB(Routes route) async {

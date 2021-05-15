@@ -23,23 +23,34 @@ class TextFieldPerzonalice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: constraints.minWidth * 0.98,
-      padding: EdgeInsets.only(left: 0.5, right: 0.5, top: 0.0, bottom: 0.0),
-      child: TextFormField(
-        controller: textController,
-        onChanged: onChanged,
-        scrollPadding: EdgeInsets.all(0),
-        style: TextStyle(color: blueOpac, fontSize: 12),
-        decoration: InputDecoration(
-          labelText: labelText,
-          labelStyle: TextStyle(color: black, fontSize: 12),
-          hintText: hintText,
-          hintStyle: TextStyle(color: greyOsc, fontSize: 11),
-          border: InputBorder.none,
+    return Column(children: [
+      Container(
+          alignment: Alignment.topLeft,
+          child: Text(
+            labelText,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+          )),
+      Container(
+        height: 40,
+        width: constraints.maxWidth,
+        padding: EdgeInsets.only(left: 0.5, right: 0.5, top: 0.0, bottom: 0.0),
+        child: TextFormField(
+          controller: textController,
+          onChanged: onChanged,
+          scrollPadding: EdgeInsets.all(0),
+          style: TextStyle(color: blueOpac, fontSize: 11),
+          textAlign: TextAlign.start,
+          textAlignVertical: TextAlignVertical.center,
+          decoration: InputDecoration(
+            hintText: hintText,
+            border: OutlineInputBorder(),
+          ),
+          obscureText: oscureText,
         ),
-        obscureText: oscureText,
       ),
-    );
+    ]);
   }
 }

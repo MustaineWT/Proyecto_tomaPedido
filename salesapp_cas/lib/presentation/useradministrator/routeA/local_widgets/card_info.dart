@@ -8,6 +8,13 @@ class CardInfo extends StatelessWidget {
       required this.constrains,
       this.route = '100',
       this.description = 'Oficina',
+      this.mo = 'Lu',
+      this.tu = 'Ma',
+      this.we = 'Mi',
+      this.th = 'Ju',
+      this.fr = 'Vi',
+      this.sa = 'Sa',
+      this.su = 'Do',
       this.zone = '1000',
       this.ffvv = 1,
       this.state = 'A'})
@@ -16,6 +23,13 @@ class CardInfo extends StatelessWidget {
   final String route;
   final String description;
   final String zone;
+  final String mo;
+  final String tu;
+  final String we;
+  final String th;
+  final String fr;
+  final String sa;
+  final String su;
   final int ffvv;
   final String state;
   @override
@@ -39,7 +53,7 @@ class CardInfo extends StatelessWidget {
               backgroundColor: gray,
               radius: 15.0,
               child: Icon(
-                Icons.people,
+                Icons.rounded_corner_rounded,
                 color: white,
               ),
             ),

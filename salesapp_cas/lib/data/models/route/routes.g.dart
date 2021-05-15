@@ -22,15 +22,22 @@ class RoutesAdapter extends TypeAdapter<Routes> {
       route: fields[2] as String,
       description: fields[3] as String,
       zone: fields[4] as String,
-      ffvv: fields[5] as int,
-      state: fields[6] as String,
+      mo: fields[5] as int,
+      tu: fields[6] as int,
+      we: fields[7] as int,
+      th: fields[8] as int,
+      fr: fields[9] as int,
+      sa: fields[10] as int,
+      su: fields[11] as int,
+      ffvv: fields[12] as int,
+      state: fields[13] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Routes obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.companyId)
       ..writeByte(1)
@@ -42,8 +49,22 @@ class RoutesAdapter extends TypeAdapter<Routes> {
       ..writeByte(4)
       ..write(obj.zone)
       ..writeByte(5)
-      ..write(obj.ffvv)
+      ..write(obj.mo)
       ..writeByte(6)
+      ..write(obj.tu)
+      ..writeByte(7)
+      ..write(obj.we)
+      ..writeByte(8)
+      ..write(obj.th)
+      ..writeByte(9)
+      ..write(obj.fr)
+      ..writeByte(10)
+      ..write(obj.sa)
+      ..writeByte(11)
+      ..write(obj.su)
+      ..writeByte(12)
+      ..write(obj.ffvv)
+      ..writeByte(13)
       ..write(obj.state);
   }
 

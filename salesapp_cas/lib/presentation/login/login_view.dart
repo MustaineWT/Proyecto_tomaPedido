@@ -41,11 +41,6 @@ class _LoginViewState extends State<LoginView> {
     return pushToPage(context, SignUpView());
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   Future<void> _onLogIn() async {
     try {
       ProgressDialogp.show(context);
@@ -83,11 +78,6 @@ class _LoginViewState extends State<LoginView> {
       return ShowDialogMessage.showDialogMessage(
           context, 'Información', 'Servidor sin respuesta.');
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

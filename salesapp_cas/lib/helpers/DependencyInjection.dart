@@ -51,6 +51,8 @@ abstract class DependencyInjection {
     Get.i.put<UserApi>(preferencesProvider);
     Get.i.put<UserUseCase>(userUseCase);
     Get.i.put<UserDB>(userDB);
+    Get.i.put<SellerDB>(sellerDB);
+    Get.i.put<RoutesDB>(routesDB);
     Get.i.put<SellerUseCase>(sellerUseCase);
     Get.i.put<RoutesUseCase>(routeUseCase);
 

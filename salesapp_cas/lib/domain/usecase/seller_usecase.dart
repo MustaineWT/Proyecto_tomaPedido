@@ -142,8 +142,8 @@ class SellerUseCase {
     }
   }
 
-  getSellerDB() async {
-    //*Obtiene todos los datos del Hive.
+  /* getSellerDB() async {
+    *Obtiene todos los datos del Hive.
     try {
       final seller = await _sellerDB.getAllSellers();
       if (seller != null) {
@@ -153,6 +153,13 @@ class SellerUseCase {
       Logs.p.e(dioError);
       throw AppException.fromDioError(dioError);
     }
+  } */
+  disposeSellerDB() async {
+    await _sellerDB.disposeSeller();
+  }
+
+  openSellerDB() async {
+    await _sellerDB.openBoxSellerDB();
   }
 
   registerSellerDB(Seller seller) async {
@@ -180,7 +187,7 @@ class SellerUseCase {
       // ignore: unnecessary_null_comparison
       if (seller != null) {
         for (int i = 0; i < seller.length; i++) {
-          await _sellerDB.addSeller(seller[i]);
+          _sellerDB.addSeller(seller[i]);
         }
         return seller;
       }

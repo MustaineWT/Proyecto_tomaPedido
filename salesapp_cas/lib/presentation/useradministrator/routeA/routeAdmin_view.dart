@@ -14,11 +14,6 @@ class RouteAdminView extends StatefulWidget {
 
 class _RouteAdminViewState extends State<RouteAdminView> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
@@ -28,7 +23,7 @@ class _RouteAdminViewState extends State<RouteAdminView> {
         height: size.height - 63,
         decoration: BoxDecoration(color: white),
         child: ValueListenableBuilder(
-            valueListenable: Hive.box<Routes>(ROUTE).listenable(),
+            valueListenable: RoutesDB.getOpenRouteBox().listenable(),
             builder: (context, Box<Routes> _routeBox, _) {
               return ListView.builder(
                 itemCount: _routeBox.values.length,

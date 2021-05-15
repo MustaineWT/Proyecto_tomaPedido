@@ -26,6 +26,13 @@ exports.executeSql = function (sql, params, proceso, callback) {
         req.input("route", params.route);
         req.input("description", params.description);
         req.input("zone", params.zone);
+        req.input("mo", params.mo);
+        req.input("tu", params.tu);
+        req.input("we", params.we);
+        req.input("th", params.th);
+        req.input("fr", params.fr);
+        req.input("sa", params.sa);
+        req.input("su", params.su);
         req.input("ffvv", params.ffvv);
         req
           .execute(sql)
@@ -44,6 +51,13 @@ exports.executeSql = function (sql, params, proceso, callback) {
         req.input("route", params.route);
         req.input("description", params.description);
         req.input("zone", params.zone);
+        req.input("mo", params.mo);
+        req.input("tu", params.tu);
+        req.input("we", params.we);
+        req.input("th", params.th);
+        req.input("fr", params.fr);
+        req.input("sa", params.sa);
+        req.input("su", params.su);
         req.input("ffvv", params.ffvv);
         req
           .execute(sql)

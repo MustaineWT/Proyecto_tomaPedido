@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:salesapp_cas/data/datasource/sellerdb.dart';
-import 'data/datasource/routesdb.dart';
 
+import 'data/datasource/routesdb.dart';
 import 'data/models/seller/seller.dart';
 import 'data/models/user/user.dart';
 import 'data/models/route/routes.dart';
@@ -27,12 +26,6 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(SellerAdapter());
   Hive.registerAdapter(RoutesAdapter());
-  Hive.openBox<Seller>(SELLER, compactionStrategy: (entries, deletedEntries) {
-    return deletedEntries > 1;
-  });
-  Hive.openBox<Routes>(ROUTE, compactionStrategy: (entries, deletedEntries) {
-    return deletedEntries > 1;
-  });
   await DependencyInjection.initialize();
   runApp(MyApp());
 }
@@ -42,11 +35,33 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     DependencyInjection.dispose();
+    Hive.close();
     super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.paused:
+        Hive.close();
+        break;
+      case AppLifecycleState.resumed:
+        try {
+          await Hive.openBox<Routes>(ROUTE,
+              compactionStrategy: (entries, deletedEntries) {
+            return deletedEntries > 1;
+          });
+        } catch (e) {
+          print(e);
+        }
+        break;
+      default:
+    }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override

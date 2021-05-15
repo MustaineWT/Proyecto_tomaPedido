@@ -57,9 +57,9 @@ class AuthUseCase {
   }
 
   Future<bool> onLogout() async {
-    await _userDB.disposeUser();
-    await _sellerDB.disposeSeller();
-    await _routesDB.disposeRoute();
+    await _userDB.deleteUser();
+    await _sellerDB.deleteAllSeller();
+    await _routesDB.deleteAllRoute();
     await _authenticationRepository.logoutSession();
     return true;
   }

@@ -79,11 +79,6 @@ class _HomeAdminViewState extends State<HomeAdminView> {
   String result = '';
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
