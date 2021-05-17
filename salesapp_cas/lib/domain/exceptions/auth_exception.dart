@@ -32,7 +32,7 @@ class AppException implements Exception {
   String _handleError(int statusCode) {
     switch (statusCode) {
       case 400:
-        return 'User Invalide';
+        return 'Session cerrada por Vigencia.';
       case 404:
         return 'The requested resource was not found';
       case 500:

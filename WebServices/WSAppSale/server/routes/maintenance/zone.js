@@ -1,24 +1,16 @@
 const express = require("express");
-var db = require("../../sql/maintenanceSQL/routeSQL");
+var db = require("../../sql/maintenanceSQL/zoneSQL");
 const app = express();
 const { verificaToken } = require("../../middlewares/autenticacion");
 
-app.post("/Api/v1/Route", verificaToken, (req, res) => {
-  const query = `SI_Route`;
+app.post("/Api/v1/Zone", verificaToken, (req, res) => {
+  const query = `SI_Zone`;
   let body = req.body;
   if (
     body.CompanyId == undefined ||
     body.BranchOfficeId == undefined ||
-    body.Route == undefined ||
-    body.Description == undefined ||
     body.Zone == undefined ||
-    body.Mo == undefined ||
-    body.Tu == undefined ||
-    body.We == undefined ||
-    body.Th == undefined ||
-    body.Fr == undefined ||
-    body.Sa == undefined ||
-    body.Su == undefined ||
+    body.Description == undefined ||
     body.Ffvv == undefined
   ) {
     return res.json({
@@ -29,26 +21,18 @@ app.post("/Api/v1/Route", verificaToken, (req, res) => {
     params = {
       companyid: body.CompanyId,
       branchofficeid: body.BranchOfficeId,
-      route: body.Route,
-      description: body.Description,
       zone: body.Zone,
-      mo: body.Mo,
-      tu: body.Tu,
-      we: body.We,
-      th: body.Th,
-      fr: body.Fr,
-      sa: body.Sa,
-      su: body.Su,
+      description: body.Description,
       ffvv: body.Ffvv,
     };
-    db.executeSql(query, params, "RouteInsert", (response, err) => {
+    db.executeSql(query, params, "ZoneInsert", (response, err) => {
       if (err) {
         return res.status(500).json({
           status: false,
           err: err,
         });
       }
-      if (response[0]["Response"] === "Route is Exists") {
+      if (response[0]["Response"] === "Ya Existe Zone") {
         return res.status(400).json({
           status: false,
           message: "Ruta ya existe.",
@@ -62,8 +46,8 @@ app.post("/Api/v1/Route", verificaToken, (req, res) => {
   }
 });
 
-app.get("/Api/v1/Route", verificaToken, (req, res) => {
-  const query = "SS_Route";
+app.get("/Api/v1/Zone", verificaToken, (req, res) => {
+  const query = "SS_Zone";
   let body = req.query;
   if (body.CompanyId == undefined || body.BranchOfficeId == undefined) {
     return res.json({
@@ -76,36 +60,36 @@ app.get("/Api/v1/Route", verificaToken, (req, res) => {
       branchofficeid: body.BranchOfficeId,
     };
 
-    db.executeSql(query, params, "SelectRoute", (route, err) => {
+    db.executeSql(query, params, "SelectZone", (zone, err) => {
       if (err) {
         return res.status(500).json({
           status: false,
           err: {},
         });
       }
-      if (route.length > 0) {
+      if (zone.length > 0) {
         res.json({
           status: true,
-          route: route,
+          zone: zone,
           message: "Solicitud Exitosa.",
         });
       } else {
         res.json({
           status: false,
-          route: [],
+          zone: [],
         });
       }
     });
   }
 });
 
-app.delete("/Api/v1/Route", verificaToken, (req, res) => {
-  const query = `SD_Route`;
+app.delete("/Api/v1/Zone", verificaToken, (req, res) => {
+  const query = `SD_Zone`;
   let body = req.body;
   if (
     body.CompanyId == undefined ||
     body.BranchOfficeId == undefined ||
-    body.Route == undefined
+    body.Zone == undefined
   ) {
     return res.json({
       status: false,
@@ -115,9 +99,9 @@ app.delete("/Api/v1/Route", verificaToken, (req, res) => {
     params = {
       companyid: body.CompanyId,
       branchofficeid: body.BranchOfficeId,
-      route: body.Route,
+      zone: body.Zone,
     };
-    db.executeSql(query, params, "RouteDelete", (response, err) => {
+    db.executeSql(query, params, "ZoneDelete", (response, err) => {
       if (err) {
         return res.status(500).json({
           status: false,

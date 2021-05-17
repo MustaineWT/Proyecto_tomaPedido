@@ -28,6 +28,17 @@ class RoutesDB {
     routeBox.clear();
   }
 
+  getRoute(int index) {
+    final routeBox = RoutesDB.getOpenRouteBox();
+    final route = routeBox.getAt(index);
+    return route;
+  }
+
+  deleteRoute(int index) {
+    final routeBox = RoutesDB.getOpenRouteBox();
+    routeBox.deleteAt(index);
+  }
+
   disposeRoute() {
     final routeBox = RoutesDB.getOpenRouteBox();
     routeBox.close();

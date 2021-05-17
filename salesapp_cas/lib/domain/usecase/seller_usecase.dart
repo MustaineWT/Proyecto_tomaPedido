@@ -5,14 +5,16 @@ import 'package:salesapp_cas/data/datasource/userdb.dart';
 import 'package:salesapp_cas/data/models/seller/seller.dart';
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
 import 'package:salesapp_cas/domain/repositories/local/local_auth_repository.dart';
+import 'package:salesapp_cas/domain/repositories/remote/authentication_repository.dart';
 import 'package:salesapp_cas/domain/repositories/remote/seller_repository.dart';
 import 'package:salesapp_cas/utils/logs.dart';
 
 class SellerUseCase {
   SellerUseCase(this._sellerRepository, this._localAuthRepository,
-      this._sellerDB, this._userDB);
+      this._sellerDB, this._userDB, this._authenticationRepository);
   final SellerRepository _sellerRepository;
   final LocalAuthRepository _localAuthRepository;
+  final AuthenticationRepository _authenticationRepository;
   final SellerDB _sellerDB;
   final UserDB _userDB;
 
@@ -135,6 +137,9 @@ class SellerUseCase {
         return response.message!;
       } on DioError catch (dioError) {
         Logs.p.e(dioError);
+        if (dioError.response!.statusCode! == 400) {
+          _authenticationRepository.logoutSession();
+        }
         throw AppException.fromDioError(dioError);
       }
     } else {
@@ -193,6 +198,9 @@ class SellerUseCase {
       }
     } on DioError catch (dioError) {
       Logs.p.e(dioError);
+      if (dioError.response!.statusCode! == 400) {
+        _authenticationRepository.logoutSession();
+      }
       throw AppException.fromDioError(dioError);
     }
   }

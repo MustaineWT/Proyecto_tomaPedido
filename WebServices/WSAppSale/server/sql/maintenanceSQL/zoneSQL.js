@@ -5,7 +5,7 @@ exports.executeSql = function (sql, params, proceso, callback) {
   conn
     .connect()
     .then(function () {
-      if (proceso === "SelectRoute") {
+      if (proceso === "SelectZone") {
         var req = new sqlDb.Request(conn);
         req.input("CompanyId", params.companyid);
         req.input("BranchOfficeId", params.branchofficeid);
@@ -19,21 +19,13 @@ exports.executeSql = function (sql, params, proceso, callback) {
             callback(null, err);
           });
       }
-      if (proceso === "RouteInsert") {
+      if (proceso === "ZoneInsert") {
         var req = new sqlDb.Request(conn);
-        req.input("companyid", params.companyid);
-        req.input("branchofficeid", params.branchofficeid);
-        req.input("route", params.route);
-        req.input("description", params.description);
-        req.input("zone", params.zone);
-        req.input("mo", params.mo);
-        req.input("tu", params.tu);
-        req.input("we", params.we);
-        req.input("th", params.th);
-        req.input("fr", params.fr);
-        req.input("sa", params.sa);
-        req.input("su", params.su);
-        req.input("ffvv", params.ffvv);
+        req.input("CompanyId", params.companyid);
+        req.input("BranchOfficeId", params.branchofficeid);
+        req.input("Zone", params.zone);
+        req.input("Description", params.description);
+        req.input("Ffvv", params.ffvv);
         req
           .execute(sql)
           .then(function (recordset) {
@@ -44,21 +36,13 @@ exports.executeSql = function (sql, params, proceso, callback) {
             callback(null, err);
           });
       }
-      if (proceso === "RouteUpdate") {
+      if (proceso === "ZoneUpdate") {
         var req = new sqlDb.Request(conn);
-        req.input("companyid", params.companyid);
-        req.input("branchofficeid", params.branchofficeid);
-        req.input("route", params.route);
-        req.input("description", params.description);
-        req.input("zone", params.zone);
-        req.input("mo", params.mo);
-        req.input("tu", params.tu);
-        req.input("we", params.we);
-        req.input("th", params.th);
-        req.input("fr", params.fr);
-        req.input("sa", params.sa);
-        req.input("su", params.su);
-        req.input("ffvv", params.ffvv);
+        req.input("CompanyId", params.companyid);
+        req.input("BranchOfficeId", params.branchofficeid);
+        req.input("Zone", params.zone);
+        req.input("Description", params.description);
+        req.input("Ffvv", params.ffvv);
         req
           .execute(sql)
           .then(function (recordset) {
@@ -69,11 +53,11 @@ exports.executeSql = function (sql, params, proceso, callback) {
             callback(null, err);
           });
       }
-      if (proceso === "RouteDelete") {
+      if (proceso === "ZoneDelete") {
         var req = new sqlDb.Request(conn);
-        req.input("companyid", params.companyid);
-        req.input("branchofficeid", params.branchofficeid);
-        req.input("route", params.route);
+        req.input("CompanyId", params.companyid);
+        req.input("BranchOfficeId", params.branchofficeid);
+        req.input("Zone", params.zone);
         req
           .execute(sql)
           .then(function (recordset) {

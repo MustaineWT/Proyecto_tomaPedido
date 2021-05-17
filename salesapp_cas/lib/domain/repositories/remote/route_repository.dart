@@ -19,4 +19,6 @@ abstract class RouteRepository {
       String ffvv);
 
   Future<List<Routes>> getRoute(token, int companyId, int branchOfficeId);
+  Future<RequestToken> deleteRoute(
+      token, int companyId, int branchOfficeId, String route);
 }

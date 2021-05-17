@@ -5,14 +5,16 @@ import 'package:salesapp_cas/data/datasource/userdb.dart';
 import 'package:salesapp_cas/data/models/route/routes.dart';
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
 import 'package:salesapp_cas/domain/repositories/local/local_auth_repository.dart';
+import 'package:salesapp_cas/domain/repositories/remote/authentication_repository.dart';
 import 'package:salesapp_cas/domain/repositories/remote/route_repository.dart';
 import 'package:salesapp_cas/utils/logs.dart';
 
 class RoutesUseCase {
   RoutesUseCase(this._routeRepository, this._localAuthRepository,
-      this._routesDB, this._userDB);
+      this._routesDB, this._userDB, this._authenticationRepository);
   final RouteRepository _routeRepository;
   final LocalAuthRepository _localAuthRepository;
+  final AuthenticationRepository _authenticationRepository;
   final RoutesDB _routesDB;
   final UserDB _userDB;
 
@@ -23,6 +25,13 @@ class RoutesUseCase {
 
   String _route = '', _description = '', _zone = '', _ffvv = '';
   int _mo = 0, _tu = 0, _we = 0, _th = 0, _fr = 0, _sa = 0, _su = 0;
+  int get mo => _mo;
+  int get tu => _tu;
+  int get we => _we;
+  int get th => _th;
+  int get fr => _fr;
+  int get sa => _sa;
+  int get su => _su;
 
   void changedRoute(String route) {
     _route = route;
@@ -113,10 +122,17 @@ class RoutesUseCase {
               ffvv: int.parse(_ffvv),
               state: 'A');
           await registerRouteDB(route);
+          if (response.message == 'Proceso Completado.') {
+            cleanController();
+          }
         }
+
         return response.message!;
       } on DioError catch (dioError) {
         Logs.p.e(dioError);
+        if (dioError.response!.statusCode! == 400) {
+          _authenticationRepository.logoutSession();
+        }
         throw AppException.fromDioError(dioError);
       }
     } else {
@@ -155,6 +171,30 @@ class RoutesUseCase {
     return route;
   }
 
+  deleteRouteDB(int index) async {
+    final requestToken = await _localAuthRepository.getUserSession();
+    List _user = await _userDB.getAllUsers();
+    int _companyId = _user[0].companyId;
+    int _branchOfficeId = _user[0].branchOfficeId;
+    final Routes result = await _routesDB.getRoute(index);
+    try {
+      final response = await _routeRepository.deleteRoute(
+          requestToken.token, _companyId, _branchOfficeId, result.route);
+      if (response.message == 'Proceso Completado.') {
+        await _routesDB.deleteRoute(index);
+      } else {
+        return 'Error de Servidor';
+      }
+      return response.message;
+    } on DioError catch (dioError) {
+      Logs.p.e(dioError);
+      if (dioError.response!.statusCode! == 400) {
+        _authenticationRepository.logoutSession();
+      }
+      throw AppException.fromDioError(dioError);
+    }
+  }
+
   registerAllWithRouteDB() async {
     //*Obtiene todos los Sellers del Api y los registra en Hive
     final requestToken = await _localAuthRepository.getUserSession();
@@ -176,7 +216,32 @@ class RoutesUseCase {
       }
     } on DioError catch (dioError) {
       Logs.p.e(dioError);
+      if (dioError.response!.statusCode! == 400) {
+        _authenticationRepository.logoutSession();
+      }
       throw AppException.fromDioError(dioError);
     }
+  }
+
+  cleanController() {
+    routeController.clear();
+    descriptionController.clear();
+    zoneController.clear();
+    ffvvController.clear();
+    routeController.text = '';
+    descriptionController.text = '';
+    zoneController.text = '';
+    ffvvController.text = '';
+    _mo = 0;
+    _tu = 0;
+    _we = 0;
+    _th = 0;
+    _fr = 0;
+    _sa = 0;
+    _su = 0;
+    _route = '';
+    _description = '';
+    _zone = '';
+    _ffvv = '';
   }
 }

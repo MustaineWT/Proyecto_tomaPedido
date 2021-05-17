@@ -40,11 +40,11 @@ abstract class DependencyInjection {
     final routesDB = RoutesDB();
 
     final authUseCase = AuthUseCase(authApi, localAuthApi);
-    final userUseCase = UserUseCase(userApi, localAuthApi, userDB);
+    final userUseCase = UserUseCase(userApi, localAuthApi, userDB, authApi);
     final sellerUseCase =
-        SellerUseCase(sellerApi, localAuthApi, sellerDB, userDB);
+        SellerUseCase(sellerApi, localAuthApi, sellerDB, userDB, authApi);
     final routeUseCase =
-        RoutesUseCase(routesApi, localAuthApi, routesDB, userDB);
+        RoutesUseCase(routesApi, localAuthApi, routesDB, userDB, authApi);
 
     Get.i.put<AuthUseCase>(authUseCase);
     Get.i.put<LocalAuthApi>(localAuthApi);

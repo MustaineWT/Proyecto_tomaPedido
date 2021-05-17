@@ -6,6 +6,7 @@ const blueOpac = Color(0xFF24638A);
 
 const green = Color(0xFF4BDB4B);
 const greenOpac = Color(0xFF1DC21D);
+const greenOsc = Color(0xFF0FA80F);
 
 const greyOsc = Color(0xFF868686);
 const gray = Color(0xff4e486f);

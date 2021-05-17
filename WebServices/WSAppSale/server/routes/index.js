@@ -5,6 +5,8 @@ app.use(require("./login.js"));
 app.use(require("./maintenance/usuario.js"));
 app.use(require("./maintenance/client.js"));
 app.use(require("./maintenance/route.js"));
+app.use(require("./maintenance/ffvv.js"));
+app.use(require("./maintenance/zone.js"));
 app.use(require("./validation/validations.js"));
 app.use(require("./facturaelectronica/factura.js"));
 

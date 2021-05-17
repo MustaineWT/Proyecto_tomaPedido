@@ -32,13 +32,13 @@ class RoutesApi extends RouteRepository {
         'Route': route,
         'Description': description,
         'Zone': zone,
-        'Mo': zone,
-        'Tu': zone,
-        'We': zone,
-        'Th': zone,
-        'Fr': zone,
-        'Sa': zone,
-        'Su': zone,
+        'Mo': mo,
+        'Tu': tu,
+        'We': we,
+        'Th': th,
+        'Fr': fr,
+        'Sa': sa,
+        'Su': su,
         'Ffvv': ffvv
       },
       options: Options(
@@ -70,5 +70,25 @@ class RoutesApi extends RouteRepository {
     return (response.data['route'] as List)
         .map((e) => Routes.fromJson(e))
         .toList();
+  }
+
+  @override
+  Future<RequestToken> deleteRoute(
+      token, int companyId, int branchOfficeId, String route) async {
+    final response = await _dio.delete(
+      '/Route',
+      data: {
+        'CompanyId': companyId,
+        'BranchOfficeId': branchOfficeId,
+        'Route': route
+      },
+      options: Options(
+        headers: {
+          'token': token, // set content-length
+        },
+      ),
+    );
+    Logs.p.i(response.data);
+    return RequestToken.fromJson(response.data);
   }
 }
