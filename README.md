@@ -4,44 +4,34 @@ Application developed in Flutter with multi-user order taking and with main conf
 - Structure base example SetState Nativo with Clean_Arquitecture
 
 <div class="row">
-  <img src="assets/Splash.png" width="250" and height="480">
-  <img src="assets/Login.png" width="250" and height="480">
-  <img src="assets/Menu.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/Splash.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/Menu.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/LogOff.png" width="250" and height="480">
 </div>
 <div class="row">
-  <img src="assets/RegRoute.png" width="250" and height="480">
-  <img src="assets/RegSeller.png" width="250" and height="480">
-  <img src="assets/Routers.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/Routes.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/RegRoute.png" width="250" and height="480">
 </div>
 
 <div class="row">
-  <img src="assets/Sellers.png" width="250" and height="480">
-  <img src="assets/Routes.png" width="250" and height="480">
-  <img src="assets/LogOff.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/RegSeller.png" width="250" and height="480">
+  <img src="salesapp_cas/assets/Sellers.png" width="250" and height="480">  
 </div>
 
 # Aditional Complements
 
+- ApiRest in NodeJs
+- DataBase in SQL SERVER
 - Dio Class global.
-
 - Constans Colors.
-
 - Navigator_utils.
-
 - Class Routes.
-
 - Google Fonts integrate with License Register.
-
 - Dependencies with Cubit.
-
 - Providers with Riverpod.
-
 - Shared_Preferences.
-
 - Hive.
-
 - Logger.
-
 
 ## Getting Started
 
