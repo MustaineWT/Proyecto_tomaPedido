@@ -41,7 +41,7 @@ abstract class ProgressDialogp {
         });
   }
 
-  static showLoadInformation(BuildContext context, String title) {
+  static showLoadInformation(BuildContext context, String title, double total) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -58,7 +58,7 @@ abstract class ProgressDialogp {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Cargando...',
+                      'Cargando...$total%',
                       style: TextStyle(fontSize: 13, color: Colors.black87),
                     ),
                     Text(

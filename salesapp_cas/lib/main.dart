@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'data/datasource/ffvvdb.dart';
 import 'data/datasource/routesdb.dart';
+import 'data/models/ffvv/ffvv.dart';
 import 'data/models/seller/seller.dart';
 import 'data/models/user/user.dart';
 import 'data/models/route/routes.dart';
@@ -26,6 +28,7 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(SellerAdapter());
   Hive.registerAdapter(RoutesAdapter());
+  Hive.registerAdapter(FfvvAdapter());
   await DependencyInjection.initialize();
   runApp(MyApp());
 }
@@ -52,6 +55,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         try {
           await Hive.openBox<Routes>(ROUTE,
+              compactionStrategy: (entries, deletedEntries) {
+            return deletedEntries > 1;
+          });
+          await Hive.openBox<Ffvv>(FFVV,
               compactionStrategy: (entries, deletedEntries) {
             return deletedEntries > 1;
           });

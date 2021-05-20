@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
 
-class DescriptionRouteCardInfo extends StatelessWidget {
-  const DescriptionRouteCardInfo({
+class DescriptionZoneCardInfo extends StatelessWidget {
+  const DescriptionZoneCardInfo({
     Key? key,
+    required this.zone,
     required this.description,
-    required this.route,
+    required this.ffvv,
   }) : super(key: key);
 
+  final String zone;
   final String description;
-  final String route;
+  final int ffvv;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
         top: 0,
-        left: 50,
-        right: 20,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        left: 70,
+        //right: 0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Text(
+              '$zone',
+              style: TextStyle(
+                fontFamily: 'Oswald',
+                color: gray,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Text(
               '$description',
               style: TextStyle(
@@ -30,7 +41,7 @@ class DescriptionRouteCardInfo extends StatelessWidget {
               ),
             ),
             Text(
-              '$route',
+              '$ffvv',
               style: TextStyle(
                 fontFamily: 'Oswald',
                 color: gray,

@@ -24,8 +24,10 @@ class _SellerAdminViewState extends State<SellerAdminView> {
         child: ValueListenableBuilder(
             valueListenable: SellerDB.getOpenSellerBox().listenable(),
             builder: (context, Box<Seller> _sellerBox, _) {
-              return ListView.builder(
+              return ListView.separated(
                 itemCount: _sellerBox.values.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
                 itemBuilder: (context, index) {
                   final _seller = _sellerBox.getAt(index);
                   // ignore: unnecessary_null_comparison

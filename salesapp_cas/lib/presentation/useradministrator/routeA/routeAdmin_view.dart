@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:salesapp_cas/data/datasource/routesdb.dart';
 import 'package:salesapp_cas/data/models/route/routes.dart';
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
@@ -8,7 +10,6 @@ import 'package:salesapp_cas/helpers/get.dart';
 import 'package:salesapp_cas/presentation/widgets/ShowDialogMessage.dart';
 import 'package:salesapp_cas/presentation/widgets/dismissible_widget.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:salesapp_cas/utils/dialogs.dart';
 
 import 'local_widgets/card_info.dart';
@@ -53,8 +54,10 @@ class _RouteAdminViewState extends State<RouteAdminView> {
         child: ValueListenableBuilder(
             valueListenable: RoutesDB.getOpenRouteBox().listenable(),
             builder: (context, Box<Routes> _routeBox, _) {
-              return ListView.builder(
+              return ListView.separated(
                 itemCount: _routeBox.values.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
                 itemBuilder: (context, index) {
                   final _routes = _routeBox.getAt(index);
                   return DismissbleWidget(
@@ -85,8 +88,8 @@ class _RouteAdminViewState extends State<RouteAdminView> {
         bottom: 5.0,
         right: 5.0,
         child: Container(
-          height: 45,
-          width: 45,
+          height: 42,
+          width: 42,
           child: FloatingActionButton(
             child: Icon(Icons.add),
             backgroundColor: gray,

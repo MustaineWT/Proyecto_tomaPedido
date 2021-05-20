@@ -5,7 +5,7 @@ import 'package:salesapp_cas/utils/colors_constants.dart';
 import 'avatarcircle_cardinfo.dart';
 import 'description_cardinfo.dart';
 import 'listviewday_cardinfo.dart';
-import 'zoneffvv_cardinfo.dart';
+import 'detail_cardinfo.dart';
 
 class CardInfo extends StatelessWidget {
   const CardInfo(
@@ -53,7 +53,7 @@ class CardInfo extends StatelessWidget {
         child: Stack(children: [
           AvatarCircleCardInfo(),
           DescriptionRouteCardInfo(description: description, route: route),
-          ZoneFFVVCardInfo(zone: zone, ffvv: ffvv),
+          DetailCardInfo(zone: zone, ffvv: ffvv),
           ListViewDaysCardInfo(
               constrains: constrains,
               mo: mo,

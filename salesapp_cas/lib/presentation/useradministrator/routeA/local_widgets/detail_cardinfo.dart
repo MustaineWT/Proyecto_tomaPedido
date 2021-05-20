@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
 
-class ZoneFFVVCardInfo extends StatelessWidget {
-  const ZoneFFVVCardInfo({
+class DetailCardInfo extends StatelessWidget {
+  const DetailCardInfo({
     Key? key,
     required this.zone,
     required this.ffvv,

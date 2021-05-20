@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/domain/usecase/ffvv_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
@@ -29,7 +30,9 @@ class _LoginViewState extends State<LoginView> {
   final _userUseCase = Get.i.find<UserUseCase>();
   final _sellerUseCase = Get.i.find<SellerUseCase>();
   final _routesUseCase = Get.i.find<RoutesUseCase>();
-
+  final _ffvvUseCase = Get.i.find<FfvvUseCase>();
+  int total = 4;
+  double avancetotal = 0.0;
   bool _vPass = true;
 
   _viewPass() {
@@ -59,11 +62,14 @@ class _LoginViewState extends State<LoginView> {
           await _userUseCase.registerUserDB();
           List<User> user = await _userUseCase.getUserDB();
           if (user[0].description == 'Administrador') {
-            ProgressDialogp.showLoadInformation(context, 'Información');
+            ProgressDialogp.showLoadInformation(
+                context, 'Información', avancetotal);
             await Future.delayed(Duration(seconds: 3));
             await _sellerUseCase.registerAllWithSellerDB();
             await _routesUseCase.registerAllWithRouteDB();
-            ProgressDialogp.dissmiss(context);
+            await _ffvvUseCase.registerAllWithFfvvDB();
+            Navigator.pop(context);
+            //ProgressDialogp.dissmiss(context);
             return popAllAndPush(context, HomeAdminView());
           } else {
             return popAllAndPush(context, HomeSellerView());

@@ -36,31 +36,31 @@ class ListViewDaysCardInfo extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               HashtagFlg(
-                name: 'Lunes',
+                name: 'Lu',
                 activate: mo,
               ),
               HashtagFlg(
-                name: 'Martes',
+                name: 'Mar',
                 activate: tu,
               ),
               HashtagFlg(
-                name: 'Miercoles',
+                name: 'Mier',
                 activate: we,
               ),
               HashtagFlg(
-                name: 'Jueves',
+                name: 'Jue',
                 activate: th,
               ),
               HashtagFlg(
-                name: 'Viernes',
+                name: 'Vier',
                 activate: fr,
               ),
               HashtagFlg(
-                name: 'Sabado',
+                name: 'Sab',
                 activate: sa,
               ),
               HashtagFlg(
-                name: 'Domingo',
+                name: 'Dom',
                 activate: su,
               ),
             ],

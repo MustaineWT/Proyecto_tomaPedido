@@ -11,7 +11,7 @@ class TextTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Registro de Ruta',
+    return Text('Registro de FFVV',
         style: TextStyle(
             fontFamily: 'Oswald',
             color: blackv2,

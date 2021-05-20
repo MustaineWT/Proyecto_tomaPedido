@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:salesapp_cas/data/datasource/routesdb.dart';
-import 'package:salesapp_cas/data/models/route/routes.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:salesapp_cas/data/datasource/ffvvdb.dart';
+import 'package:salesapp_cas/data/models/ffvv/ffvv.dart';
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
-import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
+import 'package:salesapp_cas/domain/usecase/zone_usecase.dart';
 import 'package:salesapp_cas/helpers/get.dart';
 import 'package:salesapp_cas/presentation/widgets/ShowDialogMessage.dart';
 import 'package:salesapp_cas/presentation/widgets/dismissible_widget.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:salesapp_cas/utils/dialogs.dart';
 
 import 'local_widgets/card_info.dart';
 
-class RouteAdminView extends StatefulWidget {
+class ZoneAdminView extends StatefulWidget {
   @override
-  _RouteAdminViewState createState() => _RouteAdminViewState();
+  _ZoneAdminViewState createState() => _ZoneAdminViewState();
 }
 
-class _RouteAdminViewState extends State<RouteAdminView> {
-  final _routesUseCase = Get.i.find<RoutesUseCase>();
+class _ZoneAdminViewState extends State<ZoneAdminView> {
+  final _zoneUseCase = Get.i.find<ZoneUseCase>();
   void dismissItem(
       BuildContext context, int index, DismissDirection direction) async {
     try {
       ProgressDialogp.show(context);
-      final result = await _routesUseCase.deleteRouteDB(index);
+      final result = await _zoneUseCase.deleteFfvvDB(index);
       ProgressDialogp.dissmiss(context);
       if (result == 'Proceso Completado.') {
         setState(() {});
@@ -51,28 +52,20 @@ class _RouteAdminViewState extends State<RouteAdminView> {
         height: size.height - 63,
         decoration: BoxDecoration(color: white),
         child: ValueListenableBuilder(
-            valueListenable: RoutesDB.getOpenRouteBox().listenable(),
-            builder: (context, Box<Routes> _routeBox, _) {
-              return ListView.builder(
-                itemCount: _routeBox.values.length,
+            valueListenable: FfvvDB.getOpenFfvvBox().listenable(),
+            builder: (context, Box<Ffvv> _ffvvBox, _) {
+              return ListView.separated(
+                itemCount: _ffvvBox.values.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
                 itemBuilder: (context, index) {
-                  final _routes = _routeBox.getAt(index);
+                  final _ffvv = _ffvvBox.getAt(index);
                   return DismissbleWidget(
-                    item: _routes,
+                    item: _ffvv,
                     child: CardInfo(
                       constrains: size,
-                      route: _routes!.route,
-                      description: _routes.description,
-                      zone: _routes.zone,
-                      mo: _routes.mo,
-                      tu: _routes.tu,
-                      we: _routes.we,
-                      th: _routes.th,
-                      fr: _routes.fr,
-                      sa: _routes.sa,
-                      su: _routes.su,
-                      ffvv: _routes.ffvv,
-                      state: _routes.state,
+                      description: _ffvv!.description,
+                      ffvv: _ffvv.ffvv,
                     ),
                     onDismissed: (direction) =>
                         dismissItem(context, index, direction),

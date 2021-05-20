@@ -16,14 +16,14 @@ class MenuDrawer extends StatelessWidget {
     required this.onPressedRoutes,
     required this.onPressedArticles,
     required this.onPressedListPrice,
-    required this.onPressedVisitinProgram,
+    required this.onPressedFfvv,
     required this.onPressedPromotion,
     required this.onPressedInformation,
     required this.stateColorSelectSellers,
     required this.stateColorSelectRoutes,
     required this.stateColorSelectArticle,
     required this.stateColorSelectListPrice,
-    required this.stateColorSelectVisitingProgram,
+    required this.stateColorSelectFfvv,
     required this.stateColorSelectPromotion,
     required this.stateColorSelectInformation,
   }) : super(key: key);
@@ -39,7 +39,7 @@ class MenuDrawer extends StatelessWidget {
   final Function() onPressedRoutes;
   final Function() onPressedArticles;
   final Function() onPressedListPrice;
-  final Function() onPressedVisitinProgram;
+  final Function() onPressedFfvv;
   final Function() onPressedPromotion;
   final Function() onPressedInformation;
 
@@ -47,7 +47,7 @@ class MenuDrawer extends StatelessWidget {
   final bool stateColorSelectRoutes;
   final bool stateColorSelectArticle;
   final bool stateColorSelectListPrice;
-  final bool stateColorSelectVisitingProgram;
+  final bool stateColorSelectFfvv;
   final bool stateColorSelectPromotion;
   final bool stateColorSelectInformation;
 
@@ -208,16 +208,14 @@ class MenuDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: onPressedVisitinProgram,
+                  onTap: onPressedFfvv,
                   leading: Icon(Icons.account_tree_outlined,
-                      color:
-                          stateColorSelectVisitingProgram ? Colors.blue : gray),
+                      color: stateColorSelectFfvv ? Colors.blue : gray),
                   title: Text(
-                    'Programación Visita',
+                    'Fuerza de Venta',
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color:
-                          stateColorSelectVisitingProgram ? Colors.blue : gray,
+                      color: stateColorSelectFfvv ? Colors.blue : gray,
                       fontSize: 16,
                     ),
                   ),

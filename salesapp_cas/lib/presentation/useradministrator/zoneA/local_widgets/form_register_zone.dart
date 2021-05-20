@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 import 'package:salesapp_cas/domain/exceptions/auth_exception.dart';
-import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
+import 'package:salesapp_cas/domain/usecase/ffvv_usecase.dart';
 import 'package:salesapp_cas/helpers/get.dart';
 import 'package:salesapp_cas/presentation/widgets/CurvePainter.dart';
 import 'package:salesapp_cas/presentation/widgets/ShowDialogMessage.dart';
 import 'package:salesapp_cas/utils/dialogs.dart';
 
-import 'form_routes.dart';
+import 'form_zone.dart';
 
-class FormRegisterRoutes extends StatefulWidget {
-  const FormRegisterRoutes({
+class FormRegisterFfvv extends StatefulWidget {
+  const FormRegisterFfvv({
     Key? key,
   }) : super(key: key);
   @override
-  _FormRegisterRoutesState createState() => _FormRegisterRoutesState();
+  _FormRegisterFfvvState createState() => _FormRegisterFfvvState();
 }
 
-class _FormRegisterRoutesState extends State<FormRegisterRoutes> {
-  final _routesUseCase = Get.i.find<RoutesUseCase>();
+class _FormRegisterFfvvState extends State<FormRegisterFfvv> {
+  final _ffvvUseCase = Get.i.find<FfvvUseCase>();
 
-  Future<void> _onRegisterRoutes() async {
+  Future<void> _onRegisterFfvv() async {
     try {
       ProgressDialogp.show(context);
-      final result = await _routesUseCase.registerRoute();
+      final result = await _ffvvUseCase.registerFfvv();
       ProgressDialogp.dissmiss(context);
       if (result == 'Proceso Completado.') {
         return ShowDialogMessage.showDialogMessageWithRegisterPersonalice(
-            context, 'Información', 'Ruta registrada correctamente.');
+            context, 'Información', 'Ffvv registrada correctamente.');
       } else {
         return ShowDialogMessage.showDialogMessage(
             context, 'Información', result);
@@ -61,10 +61,10 @@ class _FormRegisterRoutesState extends State<FormRegisterRoutes> {
               ])),
               child: CustomPaint(
                 painter: CurvePainter(),
-                child: FormRoutes(
-                  routesUseCase: _routesUseCase,
+                child: FormFfvv(
+                  ffvvUseCase: _ffvvUseCase,
                   constraints: constraints,
-                  register: _onRegisterRoutes,
+                  register: _onRegisterFfvv,
                 ),
               ),
             ),

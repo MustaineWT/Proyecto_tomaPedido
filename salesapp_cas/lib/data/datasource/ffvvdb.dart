@@ -1,46 +1,46 @@
 import 'package:hive/hive.dart';
-import 'package:salesapp_cas/data/models/route/routes.dart';
+import 'package:salesapp_cas/data/models/ffvv/ffvv.dart';
 
-const String FFVV = 'routeBox';
+const String FFVV = 'ffvvBox';
 
 class FfvvDB {
-  openBoxRoutesDB() async {
+  openBoxFfvvDB() async {
     await Hive.openBox<Ffvv>(FFVV,
         compactionStrategy: (entries, deletedEntries) {
       return deletedEntries > 1;
     });
   }
 
-  static Box<Ffvv> getOpenRouteBox() => Hive.box<Ffvv>(FFVV);
+  static Box<Ffvv> getOpenFfvvBox() => Hive.box<Ffvv>(FFVV);
 
-  addRoute(Ffvv ffvv) {
-    final ffvvBox = FfvvDB.getOpenRouteBox();
+  addFfvv(Ffvv ffvv) {
+    final ffvvBox = FfvvDB.getOpenFfvvBox();
     ffvvBox.add(ffvv);
   }
 
-  updateRouter(int index, Ffvv ffvv) {
-    final ffvvBox = FfvvDB.getOpenRouteBox();
+  updateFfvv(int index, Ffvv ffvv) {
+    final ffvvBox = FfvvDB.getOpenFfvvBox();
     ffvvBox.putAt(index, ffvv);
   }
 
-  deleteAllRoute() {
-    final routeBox = FfvvDB.getOpenRouteBox();
-    routeBox.clear();
+  deleteAllFfvv() {
+    final ffvvBox = FfvvDB.getOpenFfvvBox();
+    ffvvBox.clear();
   }
 
-  getRoute(int index) {
-    final ffvvBox = FfvvDB.getOpenRouteBox();
+  getFfvv(int index) {
+    final ffvvBox = FfvvDB.getOpenFfvvBox();
     final ffvv = ffvvBox.getAt(index);
     return ffvv;
   }
 
-  deleteRoute(int index) {
-    final ffvvBox = FfvvDB.getOpenRouteBox();
+  deleteFfvv(int index) {
+    final ffvvBox = FfvvDB.getOpenFfvvBox();
     ffvvBox.deleteAt(index);
   }
 
-  disposeRoute() {
-    final ffvvBox = FfvvDB.getOpenRouteBox();
+  disposeFfvv() {
+    final ffvvBox = FfvvDB.getOpenFfvvBox();
     ffvvBox.close();
   }
 }

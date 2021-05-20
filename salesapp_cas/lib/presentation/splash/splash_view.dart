@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/domain/usecase/ffvv_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/seller_usecase.dart';
 import 'package:salesapp_cas/domain/usecase/user_usecase.dart';
@@ -20,6 +21,7 @@ class _SplashViewState extends State<SplashView> {
   final _userUseCase = Get.i.find<UserUseCase>();
   final _sellerUseCase = Get.i.find<SellerUseCase>();
   final _routesUseCase = Get.i.find<RoutesUseCase>();
+  final _ffvvUseCase = Get.i.find<FfvvUseCase>();
 
   Future<void> _init() async {
     final result = await _authUseCase.onInit();
@@ -48,6 +50,7 @@ class _SplashViewState extends State<SplashView> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await _sellerUseCase.openSellerDB();
       await _routesUseCase.openRouteDB();
+      await _ffvvUseCase.openFfvvDB();
       _init();
     });
   }

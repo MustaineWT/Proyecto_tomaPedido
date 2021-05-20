@@ -15,10 +15,10 @@ class DescriptionFfvvCardInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
         top: 0,
-        left: 50,
-        right: 20,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        left: 70,
+        //right: 0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               '$description',
@@ -38,6 +38,10 @@ class DescriptionFfvvCardInfo extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Divider(
+              height: 2,
+              thickness: 2,
+            )
           ],
         ));
   }

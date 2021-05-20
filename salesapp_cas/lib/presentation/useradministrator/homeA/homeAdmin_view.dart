@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:salesapp_cas/data/datasource/userdb.dart';
 import 'package:salesapp_cas/data/models/user/user.dart';
+import 'package:salesapp_cas/presentation/useradministrator/ffvvA/ffvvAdmin_view.dart';
 import 'package:salesapp_cas/presentation/useradministrator/routeA/routeAdmin_view.dart';
 import 'package:salesapp_cas/presentation/useradministrator/sellerA/sellerAdmin_view.dart';
 import '../inibodyA/inibody_view.dart';
@@ -25,9 +26,9 @@ class _HomeAdminViewState extends State<HomeAdminView> {
 
   bool _stateColorSelectSellers = false;
   bool _stateColorSelectRoutes = false;
-  bool _stateColorSelectArticle = false;
+  bool _stateColorSelectFfvv = false;
   bool _stateColorSelectListPrice = false;
-  bool _stateColorSelectVisitingProgram = false;
+  bool _stateColorSelectArticle = false;
   bool _stateColorSelectPromotion = false;
   bool _stateColorSelectInformation = false;
 
@@ -35,7 +36,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
     IniBodyView(),
     SellerAdminView(),
     RouteAdminView(),
-    IniBodyView(),
+    FfvvAdminView(),
     IniBodyView(),
     IniBodyView(),
     IniBodyView(),
@@ -53,7 +54,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
     List<bool> opcions = [
       _stateColorSelectSellers,
       _stateColorSelectRoutes,
-      _stateColorSelectVisitingProgram,
+      _stateColorSelectFfvv,
       _stateColorSelectListPrice,
       _stateColorSelectArticle,
       _stateColorSelectPromotion,
@@ -117,16 +118,16 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                   _onPressedOpcion(1, 'Rutas');
                   Navigator.pop(context);
                 },
-                onPressedArticles: () {
-                  _onPressedOpcion(2, 'Articulos');
+                onPressedFfvv: () {
+                  _onPressedOpcion(2, 'Fuerza de Venta');
                   Navigator.pop(context);
                 },
                 onPressedListPrice: () {
                   _onPressedOpcion(3, 'Precios');
                   Navigator.pop(context);
                 },
-                onPressedVisitinProgram: () {
-                  _onPressedOpcion(4, 'Programación');
+                onPressedArticles: () {
+                  _onPressedOpcion(4, 'Articulos');
                   Navigator.pop(context);
                 },
                 onPressedPromotion: () {
@@ -139,9 +140,9 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                 },
                 stateColorSelectSellers: options[0],
                 stateColorSelectRoutes: options[1],
-                stateColorSelectArticle: options[2],
+                stateColorSelectFfvv: options[2],
                 stateColorSelectListPrice: options[3],
-                stateColorSelectVisitingProgram: options[4],
+                stateColorSelectArticle: options[4],
                 stateColorSelectPromotion: options[5],
                 stateColorSelectInformation: options[6],
               );

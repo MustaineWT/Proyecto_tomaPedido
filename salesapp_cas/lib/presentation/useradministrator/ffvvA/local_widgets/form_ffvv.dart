@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:salesapp_cas/domain/usecase/routes_usecase.dart';
+import 'package:salesapp_cas/domain/usecase/ffvv_usecase.dart';
 import 'package:salesapp_cas/utils/TextFieldPerzonalice.dart';
 import 'package:salesapp_cas/utils/colors_constants.dart';
 
 import 'button_back.dart';
 import 'button_register.dart';
-import 'button_visit.dart';
 import 'text_title.dart';
 
-class FormRoutes extends StatefulWidget {
-  const FormRoutes({
+class FormFfvv extends StatefulWidget {
+  const FormFfvv({
     Key? key,
-    required RoutesUseCase routesUseCase,
+    required FfvvUseCase ffvvUseCase,
     required this.constraints,
     required this.register,
-  })   : _routesUseCase = routesUseCase,
+  })   : _ffvvUseCase = ffvvUseCase,
         super(key: key);
 
-  final RoutesUseCase _routesUseCase;
+  final FfvvUseCase _ffvvUseCase;
   final BoxConstraints constraints;
   final Function() register;
 
   @override
-  _FormRoutesState createState() => _FormRoutesState();
+  _FormFfvvState createState() => _FormFfvvState();
 }
 
-class _FormRoutesState extends State<FormRoutes> {
+class _FormFfvvState extends State<FormFfvv> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -78,17 +77,16 @@ class _FormRoutesState extends State<FormRoutes> {
                               constraints: widget.constraints,
                               hintText: 'FFVV',
                               labelText: 'Nro de FFVV:',
-                              onChanged: widget._routesUseCase.changedRoute,
+                              onChanged: widget._ffvvUseCase.changedFfvv,
                               textController:
-                                  widget._routesUseCase.routeController),
+                                  widget._ffvvUseCase.ffvvController),
                           TextFieldPerzonalice(
                               constraints: widget.constraints,
                               hintText: 'Descripción',
                               labelText: 'Descripción de ffvv:',
-                              onChanged:
-                                  widget._routesUseCase.changedDescription,
+                              onChanged: widget._ffvvUseCase.changedDescription,
                               textController:
-                                  widget._routesUseCase.descriptionController),
+                                  widget._ffvvUseCase.descriptionController),
                           SizedBox(
                             height: 10,
                           ),

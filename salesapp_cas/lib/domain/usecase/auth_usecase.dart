@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:salesapp_cas/data/datasource/ffvvdb.dart';
 import 'package:salesapp_cas/data/datasource/routesdb.dart';
 import 'package:salesapp_cas/data/datasource/sellerdb.dart';
 import 'package:salesapp_cas/data/datasource/userdb.dart';
@@ -15,6 +16,7 @@ class AuthUseCase {
   UserDB _userDB = UserDB();
   SellerDB _sellerDB = SellerDB();
   RoutesDB _routesDB = RoutesDB();
+  FfvvDB _ffvvDB = FfvvDB();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -60,7 +62,9 @@ class AuthUseCase {
     await _userDB.deleteUser();
     await _sellerDB.deleteAllSeller();
     await _routesDB.deleteAllRoute();
+    await _ffvvDB.deleteAllFfvv();
     await _authenticationRepository.logoutSession();
+    onDispose();
     return true;
   }
 
