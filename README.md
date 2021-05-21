@@ -1,6 +1,8 @@
 # PROJECT TAKE ORDERS
 Application developed in Flutter with multi-user order taking and with main configuration
 
+- Proyect Flutter salesapp_cas
+
 - Structure base example SetState Nativo with Clean_Arquitecture
 
 <div class="row">
